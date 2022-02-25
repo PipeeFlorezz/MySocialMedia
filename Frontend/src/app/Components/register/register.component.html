@@ -1,0 +1,40 @@
+<div class="row decorComponent Component">
+
+    <div *ngIf="success" class="alert alert-primary text-center text-uppercase text-white" role="alert">
+        Te has regístrado exitosamente.
+      </div>
+
+      <div *ngIf="userFound" class="alert alert-danger text-center text-uppercase text-white" role="alert">
+        Este usuario ya existe
+      </div>
+
+        <div class="card">
+            <div>
+                <h4 class="text-center card-text text-white">Registro</h4>
+            </div>
+            <div class="card-body">
+                <form #formularioRegister="ngForm" (ngSubmit)="envioSignup(formularioRegister)">
+                    <div class="form-group my-3">
+                        <input type="email" name="email" #email="ngModel" placeholder="Email"
+                        class="form-control" [(ngModel)]="usuario.email">
+                    </div>
+                    <div class="form-group my-3">
+                        <input type="text" name="surname" #surname="ngModel" placeholder="Surname"
+                        class="form-control" [(ngModel)]="usuario.surname">
+                    </div>
+                    <div class="form-group my-3">
+                        <input type="password" name="password" #password="ngModel" placeholder="Password"
+                        class="form-control" [(ngModel)]="usuario.password">
+                    </div>
+                    <div class="form-group my-3">
+                        <label for="formFileSm" class="form-label">Elige una imagen</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file"
+                        (change)="imgRegister($event)">
+                      </div>
+                    <div class="d-grid my-3">
+                        <button class="btn btnColor">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>

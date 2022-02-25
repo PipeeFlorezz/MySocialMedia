@@ -1,0 +1,17 @@
+<div *ngIf="messagess.length == 0">
+    <div class="alert alert-danger" role="alert">
+        <p class="card-text text-center">No has recibido ningun mensaje</p>                  
+    </div>
+</div>
+
+<div *ngFor="let messagge of messagess" class="card mb-3 envRec">
+    <div class="card-header d-flex align-items-center headerMsj text-white">
+        Mensaje de: {{messagge.emitter.surname}}
+        <div class="imageHeader mx-2">
+            <img [src]="'http://localhost:3000/' + messagge.emitter.imagePath" class="img-card-top">
+        </div> 
+    </div>
+    <div class="card-body mensajesCard">
+        <p class="card-text mt-2">{{messagge.text}}</p>
+    </div>
+</div>

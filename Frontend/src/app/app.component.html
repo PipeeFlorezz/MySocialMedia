@@ -1,0 +1,67 @@
+<div class="container cpa">
+  <header class="fixed text-capitalize">
+    <nav class="navbar navbar-expand">
+    <div class="container-fluid">
+      <div class="imageLogo">
+        <img src="../assets/imgs/angular.jpg"  alt="ImageLogo">
+      </div>
+      <a class="navbar-brand text-white">MySocialApp</a>
+      <span class="glyphicon glyphicon-circle-arrow-left"></span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav" *ngIf="identity">
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="['/inicio']" [routerLinkActive]="['active']">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="['/usuarios', page]"
+            [routerLinkActive]="['active']">Usuarios </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" *ngIf="identity">
+          <li class="nav-item imageHeader mx-2">
+            <img *ngIf="identity.imagePath.length >= 1" [src]="'http://localhost:3000/' + identity.imagePath" class="img-card-top">
+            <img *ngIf="identity.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+          </li>
+          <li class="nav-item dropdown datos">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{identity.surname}} 
+            </a>
+            <ul class="dropdown-menu sombra listaUsuarios" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item text-white" [routerLink]="['/profile', identity._id]">Profile</a></li>
+              <li><a class="dropdown-item text-white logOut" (click)="logOut()">LogOut</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" *ngIf="!identity">
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="['/about']" 
+            [routerLinkActive]="['active']" style="padding-top: 12px;">About</a>
+          </li>
+        </ul>
+  
+        <ul class="navbar-nav ml-auto" *ngIf="!identity">
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="['/register']" [routerLinkActive]="['active']">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="['/login']" [routerLinkActive]="['active']">Login</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="footer">
+  <p>MySocialApp Lorem ipsum dol.L. Copyright 🗿 año 2022</p>
+</footer> 

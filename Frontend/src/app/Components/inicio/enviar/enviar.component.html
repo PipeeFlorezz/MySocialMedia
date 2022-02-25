@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-header headerMsj">
+        <h6 class="text-center card-text text-white">Sistema de Mensajeria</h6>
+    </div> 
+    <div class="card-body">
+        <form #formMensajeria="ngForm" (ngSubmit)="enviarMessage(formMensajeria)">
+            <div class="form-group my-2">
+                <h6 class="card-text"><span>Elige un Usuario</span></h6>
+                <select name="reciever" #reciever="ngModel" class="form-select" 
+                [(ngModel)]="messagge.reciever">
+                    <option value={{followed._id}} *ngFor="let followed of followeds">
+                        {{followed.surname}}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-group my-2">
+                <textarea name="text" #text="ngModel" id="" cols="5" rows="5" class="form-control"
+                [(ngModel)]="messagge.text"></textarea>
+            </div>
+
+            <div class="d-grid form-group my-2">
+                <button class="btn btnColor">Enviar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

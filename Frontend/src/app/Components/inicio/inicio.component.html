@@ -1,0 +1,84 @@
+<div class="row InicioComp">
+
+    <div class="col-12 col-lg-7 mb-2">
+        <div class="sticky-top formCard">
+            <h6 class="text-center yellowColor"><span>Crea una Publicacion</span></h6>
+
+            <form #publicationForm="ngForm" (ngSubmit)="makePublication(publicationForm)">
+                <div class="form-group my-3">
+                    <label for="text" class="form-label">¿ En que estas pensando ?</label>
+                    <input type="text" name="text" #text="ngModel" placeholder="Escribe una pubicacion"
+                        class="form-control" [(ngModel)]="publication.text">
+                </div>
+                <div class="form-group my-3">
+                    <label for="formFileSm" class="form-label">Elige una imagen</label>
+                    <input class="form-control form-control-sm" id="formFileSm" type="file"
+                        (change)="imgPublication($event)">
+                </div>
+                <div class="d-grid my-3">
+                    <button class="btn btnColor" [disabled]="!publicationForm.form.valid">Enviar</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <h6 class="text-center tituoloColor"><span>Mensajeria</span></h6>
+
+
+            <div class="buttonsMsgs">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/inicio/recibidos']"
+                            [routerLinkActive]="['active']">Recibidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/inicio/enviar']" [routerLinkActive]="['active']">Enviar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/inicio/enviados']"
+                            [routerLinkActive]="['active']">Enviados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/inicio/msjTotales']"
+                            [routerLinkActive]="['active']">Mensajes</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mensajeria mb-3">
+                <router-outlet></router-outlet>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+        <div *ngIf="oficialPublications.length == 0">
+            <div class="alert alert-warning" role="alert">
+                <p class="card-text text-center">Para ver publicaciones haz una o sigue a un usuario</p>
+            </div>
+        </div>
+
+        <div *ngFor="let publication of oficialPublications" class="card Pc">
+            <div class="card-header publishCards border border-danger">
+                <div class="headerItems">
+                    <div class="imageHeader">
+                        <img *ngIf="publication.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
+                        <img *ngIf="publication.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+
+                    </div>
+                    <div>
+                        <span class="card-text"><a class="text-decoration-none text-white text-capitalize"
+                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname}}</b></a>
+                        </span>
+                        <span class="text-muted"><i>{{publication.created_At}}</i></span>
+                    </div>
+                </div>
+                <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
+            </div>
+            <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
+                <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top w-100">
+            </div>
+        </div>
+    </div>
+</div>

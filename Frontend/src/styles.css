@@ -1,0 +1,495 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+}
+
+.clearfix {
+    clear: both;
+    float: none;
+}
+
+body {
+    color: #333;
+    background: #f2f2f2;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 16px;
+    line-height: normal;
+    text-shadow: 1px 1px 1px #bf9c9c;
+}
+
+header > nav {
+    font-size: 18px !important;
+}
+
+.Component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 76.5vh;
+}
+
+.InicioComp {
+    min-height: 76.5vh;
+}
+
+.decorComponent .card{
+    width: 30%;
+    height: auto;
+    background: #fbf1d5;
+    border-top-color: #f5ba41 !important;
+    border-top: 3px solid #f5ba41!important;
+    box-shadow: 0px 0px 4px gray;
+}
+
+.decorComponent .card h4{
+    display: block;
+    padding: 4px;
+    margin: auto;
+    margin-top: 19px;
+    width: 91%;
+    border-radius: 8px;
+    background: #f5ba41;
+    box-shadow: 0px 0px 2px gray;
+
+}
+
+.jumbotron {
+    width: 90%;
+    background: #fbf1d5;
+    padding: 10px;
+    font-family: 'Open Sans',sans-serif;
+}
+
+.jumbotron .lead {
+    text-align: justify;
+}
+
+
+.ml-auto {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnAbout {
+    background: linear-gradient(to right,#009989 0,#4cb7ac 100%);
+}
+
+.sombra{
+    position: absolute !important;
+    width: 300px;
+    margin-right: 40px;
+    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+}
+
+
+.posRelative {
+    position: relative !important;
+}
+
+.dropdown-menu[data-bs-popper] {
+    top: 110%;
+    left: -68px;
+    margin-top: 0.125rem;
+    z-index: 2 !important;
+}
+
+.listaUsuarios > li > a:hover {
+    color: black !important;
+    
+}
+
+.logOut {
+    cursor: pointer;
+}
+
+.userImg {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border-radius: 100%;
+    width: 57px;
+    height: 57px;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImg img{
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    outline: 1px solid gray;
+    outline-offset: 1px;
+}
+
+.imgUser {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border-radius: 100%;
+    width: 47px;
+    height: 47px;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgUser img{
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    outline: 1px solid gray;
+    outline-offset: 1px;
+}
+
+
+.usersInfo {
+    margin-left: 56px;
+}
+
+.usuariosCards {
+    box-shadow: 0px 0px 9px gray inset;
+    margin-bottom: -3px;
+    background: #fbf1d5;
+
+}
+
+.navegationUsers {
+    margin-top: 6.9px;
+}
+
+
+.navsItems {
+    border-radius: 3px;
+    box-shadow: 0px 0px 11px gray inset !important;
+}
+
+
+
+.imagePublication {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.imagePublication img {
+    width: 100%;
+    height: 100%;
+} 
+
+.imageHeader {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageHeader img {
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    outline: 1px solid gray;
+    outline-offset: 1px;
+}
+
+.headerComponent {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    background-color: rgb(83, 240, 44);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.headerComponent img {
+    width: 94%;
+    height: 94%;
+    border-radius: 100%;
+}
+
+
+.publishCards {
+    background-color: #40b2a6; 
+    padding: 0px;
+    padding-left: 5px;
+    padding-top: 5px;
+    box-shadow: inset 0 -4px 0 0 rgb(0 0 0 / 30%);
+}
+
+.headerItems {
+    display: flex;
+}
+
+.headerItems div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+}
+
+.headerItems div:nth-child(2)  span{
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+    
+}
+
+.headerItems div:nth-child(2) span a{
+    letter-spacing: 2px;
+}
+
+
+.textEnviados {
+    text-align: justify;
+    margin-left: 42px;
+}
+
+.mensajesCard {
+    position: relative !important;
+    padding-top: 8px !important;
+}
+
+.mensajesCard :nth-child(2){
+font-weight: 550;
+}
+
+.mensajesCard :nth-child(3){
+    display: block;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.columnProfile {
+    border-left: 2px solid gray;
+}
+
+.imgProfileUser {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgProfileUser img{
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    outline: 1px solid gray;
+    outline-offset: 1px;
+}
+
+.profilInfo {
+    margin-left: 27px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-right: 15px;
+}
+
+.stats {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats > p {
+    border-right: 3px solid gray;
+    padding-right: 60px;
+}
+
+
+.stats > p:last-child {
+    border: 0px;
+}
+
+
+.ButtonsFollows {
+    margin-left: auto;
+}
+
+
+.cpa {
+    padding-top: 5rem;
+}
+ 
+
+.fixed {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    box-shadow: 0px 1px 4px gray;
+    background: linear-gradient(to right,#009989 0,#4cb7ac 100%);
+}
+
+.imageLogo {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+
+
+.imageLogo img{
+    width: 100%;
+    height: 100%;
+}
+
+.mensajeria {
+    margin-top: 20px;
+    max-height: 339px;
+    width: 100%;
+    overflow: auto;
+    
+}
+
+.formCard {
+    top: 80px !important;
+    height: auto;
+    padding: 12px;
+    padding-top: 24px;
+    background: #fbf1d5;
+    border-top-color: #f5ba41 !important;
+    border-top: 3px solid #f5ba41!important;
+    box-shadow: 1px 1px 5px gray;
+}
+
+.fondoUser {
+    background: #fbf1d5;
+    border-top-color: #f5ba41 !important;
+    border-top: 3px solid #f5ba41!important;
+    box-shadow: 1px 1px 5px gray;
+ 
+}
+
+.sticky-top {
+    z-index: 0 !important;
+}
+
+.yellowColor{
+   background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+   padding: 8px;
+   border-radius: 8px 8px 8px 8px;
+   color: white;
+   text-transform: uppercase;
+   margin-bottom: 15px;
+}
+
+.tituoloColor{
+    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important; 
+    padding: 8px;
+    border-radius: 0px 8px 8px 0px;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: block;
+    width: 180px;
+ }
+
+.btnColor {
+    box-shadow: inset 0 -3px 0 0 rgb(0 0 0 / 20%);
+    background-color: #f5ba41; 
+    color: white;
+}
+
+.headerMsj {
+    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+}
+
+.nav {
+    flex-wrap: nowrap !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #f5ba41;
+}
+
+.nav-link {
+    color: #1e2127;
+}
+
+.nav-link:hover {
+    color: #1e2127;
+}
+
+.Pc {
+    box-shadow: 0px 1px 4px gray;
+    margin-bottom: 7px !important;
+
+}
+
+.envRec { 
+    box-shadow: 0px 0px 5px gray !important;
+}
+
+.footer {
+    width: 100%;
+    height: 81px;
+    line-height: 81px;
+    background: #fff;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.cardProfile {
+    border-bottom: 3px solid gray;
+    padding-bottom: 19px;
+    margin-bottom: 15px;
+}
+
+  @media screen and (max-width: 1200px) and (min-width: 992px){
+
+    .stats > p {
+        border-right: 3px solid gray;
+        padding-right: 25px;
+    }
+
+  }
+
+  @media screen and (min-width: 1201px){
+
+    .stats > p {
+        border-right: 3px solid gray;
+        padding-right: 40px;
+    }
+
+  }
+
+  @media screen and (min-width: 1400px){
+
+    .stats > p {
+        border-right: 3px solid gray;
+        padding-right: 60px;
+    }
+
+  }
+
+  @media screen and (max-width: 768px){
+
+    .stats > p {
+        border-right: 3px solid gray;
+        padding-right: 36px;
+    }
+
+  }

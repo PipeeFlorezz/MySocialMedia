@@ -1,0 +1,84 @@
+<div class="row  InicioComp mediaQ" *ngIf="usuarioProfile">
+    <div class="col-12 col-lg-6 mb-2">
+        <div class="card text-secondary">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex cardProfile">
+                    <div class="imgProfileUser">
+                        <img *ngIf="usuarioProfile.imagePath.length >= 1" [src]="'http://localhost:3000/' + usuarioProfile.imagePath" class="img-card-top">
+                        <img *ngIf="usuarioProfile.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                    </div>
+                    <div class="profilInfo">
+                        <div *ngIf="usuarioProfile._id != identify._id">
+                            <h6 *ngIf="followsUserIds.indexOf(identify._id) >= 1; else noFollow"><span class="badge bg-secondary">Te sigue</span></h6>
+                            <ng-template #noFollow>
+                                <h6><span class="badge bg-secondary">No te sigue</span></h6>
+                            </ng-template>
+                        </div>
+                        <span><b>{{usuarioProfile.email}}</b></span>
+                        <span>{{usuarioProfile.surname}}</span>
+                        <div class="mt-2" *ngIf="usuarioProfile._id != identify._id">
+                            <button *ngIf="followedsIds.indexOf(usuarioProfile._id) == -1" class="btn btn-primary"
+                            (click)="addFollow(usuarioProfile._id)">
+                                Seguir
+                            </button>
+                            <button *ngIf="followedsIds.indexOf(usuarioProfile._id) >= 0" class="btn btn-success"
+                            (mouseover)="isOverButton(usuarioProfile._id)"
+                            (mouseleave)="leavingButton(usuarioProfile._id)"
+                            [class.btn-danger]="usuarioProfile._id == isOver"
+                            (click)="deleteFollow(usuarioProfile._id)">
+                                <span *ngIf="usuarioProfile._id == isOver; else noOver">
+                                    <span>Dejar de seguir</span>
+                                </span>
+                                <ng-template #noOver>
+                                    <span>Siguiendo</span>
+                                </ng-template>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats">
+                    <p>Publicaciones: <span>{{publications}}</span></p>
+                    <p>Siguiendo: <span>{{followings}}</span></p>
+                    <p>Seguidores: <span>{{followeds}}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div *ngIf="Oficialpublications.length == 0">
+            <div class="alert alert-warning" role="alert">
+                <p class="card-text text-center">No haz hecho publicaciones</p>                  
+            </div>
+        </div>
+
+        <h6 *ngIf="Oficialpublications.length >= 1 " class="text-center tituoloColor"><span>Publicaciones</span></h6>
+
+
+        <div *ngFor="let publication of Oficialpublications" class="card Pc">
+            <div class="card-header publishCards">
+                <div class="headerItems">
+                    <div class="imageHeader">
+                        <img *ngIf="usuarioProfile.imagePath.length >= 1" [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
+                        <img *ngIf="usuarioProfile.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+
+                    </div>
+                    <div>
+                        <span class="card-text"><a class="text-decoration-none text-white"
+                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname }}</b></a>
+                        </span>
+                        <span class="text-muted"><i>{{publication.created_At}}</i></span>
+                    </div>
+                </div>
+                <p class="card-text my-3 text-white">{{publication.text}}</p>
+            </div>
+            <div>
+                <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
+                    <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 
