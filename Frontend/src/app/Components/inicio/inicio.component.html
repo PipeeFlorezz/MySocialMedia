@@ -2,23 +2,28 @@
 
     <div class="col-12 col-lg-7 mb-2">
         <div class="sticky-top formCard">
-            <h6 class="text-center yellowColor"><span>Crea una Publicacion</span></h6>
+            <h6 class="text-center yellowColor"><span id="despliegueForm">Crea una Publicacion</span></h6>
 
-            <form #publicationForm="ngForm" (ngSubmit)="makePublication(publicationForm)">
-                <div class="form-group my-3">
-                    <label for="text" class="form-label">¿ En que estas pensando ?</label>
-                    <input type="text" name="text" #text="ngModel" placeholder="Escribe una pubicacion"
-                        class="form-control" [(ngModel)]="publication.text">
-                </div>
-                <div class="form-group my-3">
-                    <label for="formFileSm" class="form-label">Elige una imagen</label>
-                    <input class="form-control form-control-sm" id="formFileSm" type="file"
-                        (change)="imgPublication($event)">
-                </div>
-                <div class="d-grid my-3">
-                    <button class="btn btnColor" [disabled]="!publicationForm.form.valid">Enviar</button>
-                </div>
-            </form>
+            <div id="formularioToggle">
+                <form #publicationForm="ngForm" (ngSubmit)="makePublication(publicationForm)">
+                    <div class="form-group my-3">
+                        <label for="text" class="form-label">¿ En que estas pensando ?</label>
+                        <input type="text" name="text" #text="ngModel" placeholder="Escribe una pubicacion"
+                            class="form-control" [(ngModel)]="publication.text" required>
+                        <span *ngIf="!text.value && text.touched">El texto de la publicacion es obligatoria</span>
+                    </div>
+                    <div class="form-group my-3">
+                        <label for="formFileSm" class="form-label">Elige una imagen</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file"
+                            (change)="imgPublication($event)">
+
+                    </div>
+                    <div class="d-grid my-3">
+                        <button type="submit" class="btn btnColor"
+                            [disabled]="publicationForm.form.invalid">Enviar</button>
+                    </div>
+                </form>
+            </div>
 
             <hr>
 
@@ -59,17 +64,20 @@
             </div>
         </div>
 
-        <div *ngFor="let publication of oficialPublications" class="card Pc">
+        <div *ngFor="let publication of oficialPublications; let indice = index" class="card Pc">
             <div class="card-header publishCards border border-danger">
                 <div class="headerItems">
                     <div class="imageHeader">
-                        <img *ngIf="publication.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
-                        <img *ngIf="publication.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                        <img *ngIf="publication.user.imagePath.length >= 1"
+                            [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
+                        <img *ngIf="publication.user.imagePath.length == 0"
+                            [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                            class="img-card-top">
 
                     </div>
                     <div>
                         <span class="card-text"><a class="text-decoration-none text-white text-capitalize"
-                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname}}</b></a>
+                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname}}-{{(indice)}}</b></a>
                         </span>
                         <span class="text-muted"><i>{{publication.created_At}}</i></span>
                     </div>
@@ -78,6 +86,31 @@
             </div>
             <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
                 <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top w-100">
+            </div>
+            <div class="card-footer">
+                <hr class="my-2">
+                <div class="d-flex justify-content-between">
+                    <span> likes </span>
+                    <span>10</span>
+                    <span class="postInteractions" style="cursor: pointer;" id="{{indice}}"> comentar </span>
+
+                </div>
+
+                <form id="{{indice}}" style="display: none;">
+                    <hr class="my-2"> 
+                    <div class="form-group my-3 d-flex align-items-center">
+                        <div class="imageFooter">
+                            <img *ngIf="identity.imagePath.length >= 1"
+                                [src]="'http://localhost:3000/' + identity.imagePath" class="img-card-top">
+                            <img *ngIf="identity.imagePath.length == 0"
+                                [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                                class="img-card-top">
+                        </div>
+                        <input [formControl]="commentCtrl" (keyup.enter)="makeComment(publication._id, $event)"
+                            type="text" placeholder="Escribe un comentario..." id="{{publication._id}}"
+                            class="form-control" required>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

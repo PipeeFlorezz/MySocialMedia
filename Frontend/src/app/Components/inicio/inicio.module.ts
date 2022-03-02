@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+
 
 import { InicioComponent } from '../inicio/inicio.component'
 import { EnviadosComponent } from '../inicio/enviados/enviados.component'
@@ -20,6 +21,7 @@ import { InicioRoutingModule } from './inicio-routing.module'
     MsjTotalesComponent 
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,

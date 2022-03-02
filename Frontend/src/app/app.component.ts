@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { UsuarioService } from './Services/usuario.service';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-root',
@@ -30,6 +30,12 @@ export class AppComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+    $("#Header").on('click', function(){
+      console.log(this)
+      //$(".imageLogo").text('Hola mexico');
+    })
+
+
     console.log('Component principal appComponent');
     this.identity = this.usuaroServices.getIdentity();
     console.log(

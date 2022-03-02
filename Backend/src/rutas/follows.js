@@ -51,7 +51,7 @@ async function verify(req, res, next) {
     let token = req.headers.authorization.replace(/['"]+/g, '');
     if (token) {
         console.log('Token desde el verify Funcion' + token);
-        let verifyToken = jwt.verify(token, 'secretkey');
+        let verifyToken = await jwt.verify(token, 'secretkey');
         if (verifyToken) req.user = verifyToken.id;
         console.log(req.user, verifyToken);
     }

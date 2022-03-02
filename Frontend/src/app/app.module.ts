@@ -35,7 +35,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
     FormsModule,
     HttpClientModule,
     InicioModule
-  ],
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

@@ -29,6 +29,7 @@ app.use('/users', require('./rutas/userRoutes'));
 app.use('/publications', require('./rutas/publicationsRoutes'));
 app.use('/follows', require('./rutas/follows'));
 app.use('/messagess', require('./rutas/messagess'));
+app.use('/comments', require('./rutas/comments'));
 
 // archivos estaticos
 app.use('/', express.static(path.resolve('src/public/imgs')));
