@@ -5,7 +5,7 @@ const Comments = require('../models/comments');
 const moment = require('moment');
 moment.locale('es');
 
-routerComments.post('/addComment', verify, async (req, res) => {
+/*routerComments.post('/addComment', verify, async (req, res) => {
     console.log('Ruta para crear comentarios' + req.body, req.user)
         let body = req.body;
         let comment = new Comments();
@@ -18,14 +18,15 @@ routerComments.post('/addComment', verify, async (req, res) => {
         .populate('user publicationId').sort('-created_At')
         return res.json({ addedComent: getComent })
 
-});
+});*/
 
-routerComments.get('/', verify, (req, res) => {
+routerComments.get('/', verify, async (req, res) => {
     console.log('ruta get comentarios: ' + req.user)
-    console.log('req.body getComments: ' + req.body)
-    console.log(req.body);
 
-    return res.json({ allRight: 'ruta getComments funcionando' })
+    let coments =  await Comments.find().populate('user publicationId')
+        .sort('-created_At')
+
+    return res.json({ allComments: coments })
 })
 
 async function verify(req, res, next) {

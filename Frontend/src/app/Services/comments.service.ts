@@ -11,20 +11,23 @@ import { Follow } from '../Components/Models/follows';
 export class CommentsService {
 
   public apiUrlscomments: string;
+  public apiUrlPublish: string;
   public token: string;
   constructor(
     private http: HttpClient
   ) { 
     this.apiUrlscomments = ApiUrls.comments;
+    this.apiUrlPublish = ApiUrls.publications;
     this.token = '';
+    console.log(this.apiUrlPublish);
   }
 
   makeComment(comment: Comment): Observable<any>{
     let datos = JSON.stringify(comment);
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                    .set('authorization', this.getToken());
-                                   
-    return this.http.post(this.apiUrlscomments+ 'addComment', datos, {headers: headers})
+
+    return this.http.put(this.apiUrlPublish+ 'addComment', datos, {headers: headers})
   }
 
   getToken(): any{

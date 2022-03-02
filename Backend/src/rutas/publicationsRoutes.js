@@ -2,6 +2,8 @@ const { Router } = require('express');
 const jwt = require('jsonwebtoken');
 const Publication = require('../models/publicaciones');
 const Follow = require('../models/follow');
+const Comments = require('../models/comments');
+
 const moment = require('moment');
 moment.locale('es')
 
@@ -21,7 +23,7 @@ PublicationRouter.get('/', verify, async (req, res) => {
 
     let publish = await Publication.find()
         .sort('-createdAt')
-        .populate('user')
+        .populate('user comment')
     console.log('publicationRoutes: ' + publish);
     console.log('rutadepiblication/', req.user);
     console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
@@ -46,6 +48,22 @@ PublicationRouter.post('/addPublish', verify, async (req, res) => {
         return res.json({ Savedpublish });
 
 }); 
+
+PublicationRouter.put('/addComment', verify, async (req,res) => {
+    console.log('Ruta para crear comentarios' , req.user)
+    console.log(req.body.text)
+    let body = req.body;
+    let comment = new Comments();
+    comment.publicationId = body.publicationId;
+    comment.user = body.user;
+    comment.created_At = moment().format('L') + ' ' + moment().format('LTS');
+    comment.text = body.text;
+    let savedComent = await comment.save();
+    let commentDone = await Comments.findOne({_id: savedComent._id})
+    let updatedPublish = await Publication.findByIdAndUpdate(commentDone.publicationId, {comment: commentDone._id}, {new: true})
+        .populate('comment user')
+    return res.json({publishUpdated: [updatedPublish, commentDone]})
+})
 
 async function verify(req, res, next) {
     if (!req.headers.authorization) return res.json({ noToken: 'No hay token' });

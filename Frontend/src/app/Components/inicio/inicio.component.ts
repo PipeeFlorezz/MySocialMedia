@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { Publication } from '../Models/publication';
 import { PublicationsService } from '../../Services/publications.service';
@@ -49,7 +49,7 @@ export class InicioComponent implements OnInit {
     this.publicationsIds = [];
     this.comments = [];
     this.publications = [];
-    this.publication = new Publication('', '', '');
+    this.publication = new Publication('', '', '', '');
     this.uploadFile = [];
     this.users = [];
     this.followeds = [];
@@ -65,6 +65,7 @@ export class InicioComponent implements OnInit {
     })
 
 
+    
 
     this.getPublissh();
     this.getFollows();
@@ -90,7 +91,12 @@ export class InicioComponent implements OnInit {
     console.log(this.comment)
     this.commentService.makeComment(this.comment).subscribe(
       response => {
-        console.log(response.addedComent);
+        console.log(response)
+        console.log(response.doneComent)
+        console.log('Publicacion actualizada: ');
+        console.log(response.publishUpdated[0])
+        console.log('Comentario guardado: ');
+        console.log(response.publishUpdated[1])
         $(`#${publictionId}`).val('')
       }
     )
@@ -109,6 +115,7 @@ export class InicioComponent implements OnInit {
       $(`#${id}`).slideToggle('fast');
       this.setAttribute('id', id)
     })
+    return;
   }
 
   getFollows() {
@@ -158,6 +165,18 @@ export class InicioComponent implements OnInit {
           console.log(response.Savedpublish);
           this.oficialPublications.unshift(response.Savedpublish)
           console.log(this.oficialPublications)
+          setTimeout(() => {
+            console.log($(".pc .card-footer .postInteractions").first())
+            $(".pc .card-footer .postInteractions").first().on('click', function (ev) {
+              console.log('Click en el input de la ultima publicacion')
+              console.log(this.getAttribute('id'))
+               let id: any = this.getAttribute('id');
+               this.removeAttribute('id')
+               console.log($(`#${id}`));
+               $(`#${id}`).slideToggle('fast');
+               this.setAttribute('id', id)
+             })
+          }, 1000);
           publicationForm.reset();
         }
       )

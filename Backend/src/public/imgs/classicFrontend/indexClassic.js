@@ -38,7 +38,7 @@ file.addEventListener('change', async function(){
     .then(response => console.log('Success:', response))
     .catch(error => console.error('Error:', error))*/
 
-    fetch('http://localhost:3000/comments/addComment', {
+    /*fetch('http://localhost:3000/comments/addComment', {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: {
@@ -48,6 +48,17 @@ file.addEventListener('change', async function(){
     })
         .then(response => response.json())
         .then(response => console.log('Success:', response.addComent))
+        .catch(error => console.error('Error:', error))*/
+        
+    await fetch('http://localhost:3000/comments/', {
+        method: 'GET',
+        headers: {
+            'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTgxODg0YjM5M2U5ODQwYzhhMTM2YyIsImlhdCI6MTY0NTgzMTkwNn0.bbaflgMpNIEKdYv8GfHw7E_MSjFb3YU5utkLma0Rq5o',
+            'Content-Type': 'application/json'
+          }
+    })
+        .then(response => response.json())
+        .then(response => console.log('Success:', response.allComments))
         .catch(error => console.error('Error:', error))
     
     console.log('Culquier ejecucion despues de la peticion fetch');
