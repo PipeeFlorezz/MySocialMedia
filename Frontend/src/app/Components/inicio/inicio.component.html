@@ -64,7 +64,8 @@
             </div>
         </div>
 
-        <div *ngFor="let publication of oficialPublications; let indice = index" class="card Pc">
+        <div (click)="cartaPush(publication._id)" *ngFor="let publication of oficialPublications; let indice = index"
+            class="card Pc">
             <div class="card-header publishCards border border-danger">
                 <div class="headerItems">
                     <div class="imageHeader">
@@ -85,9 +86,9 @@
                 <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
             </div>
             <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
-                <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top w-100">
+                <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top">
             </div>
-            <div class="card-footer">
+            <div class="card-footer border border-warning">
                 <hr class="my-2">
                 <div class="d-flex justify-content-between">
                     <span> likes </span>
@@ -96,21 +97,36 @@
 
                 </div>
 
-                <form id="{{indice}}" style="display: none;">
-                    <hr class="my-2"> 
-                    <div class="form-group my-3 d-flex align-items-center">
-                        <div class="imageFooter">
-                            <img *ngIf="identity.imagePath.length >= 1"
-                                [src]="'http://localhost:3000/' + identity.imagePath" class="img-card-top">
-                            <img *ngIf="identity.imagePath.length == 0"
-                                [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
-                                class="img-card-top">
+                <hr class="my-2">
+
+                <div id="{{indice}}" style="display: none;">
+                    <div *ngFor="let comment of publication.comments" class="my-2">
+                        <div class="d-flex">
+                            <div class="imageHeader mx-2">
+                                <img *ngIf="comment.user.imagePath && comment.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + comment.user.imagePath" class="img-card-top">
+                                <img *ngIf="comment.user.imagePath == '' && comment.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                            </div>
+                            <div>
+                                <span>{{comment.user.surname}}</span>
+                                <p>{{comment.text}}</p>
+                            </div>
                         </div>
-                        <input [formControl]="commentCtrl" (keyup.enter)="makeComment(publication._id, $event)"
-                            type="text" placeholder="Escribe un comentario..." id="{{publication._id}}"
-                            class="form-control" required>
                     </div>
-                </form>
+                    <form>
+                        <div class="form-group my-3 d-flex align-items-center">
+                            <div class="imageFooter">
+                                <img *ngIf="identity.imagePath.length >= 1"
+                                    [src]="'http://localhost:3000/' + identity.imagePath" class="img-card-top">
+                                <img *ngIf="identity.imagePath.length == 0"
+                                    [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                                    class="img-card-top">
+                            </div>
+                            <input [formControl]="commentCtrl" (keyup.enter)="makeComment(publication._id, $event)"
+                                type="text" placeholder="Escribe un comentario..." id="{{publication._id}}"
+                                class="form-control" required>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

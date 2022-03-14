@@ -20,14 +20,14 @@ PublicationRouter.get('/', verify, async (req, res) => {
     let publish = await Publication.find({user: {"$in": followeds}})
                                    .sort('-createdAt');*/
 
-
+    let comentarios = await Comments.find()
+        .populate('user publicationId')
     let publish = await Publication.find()
         .sort('-createdAt')
-        .populate('user comment')
-    console.log('publicationRoutes: ' + publish);
-    console.log('rutadepiblication/', req.user);
-    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
-    return res.json({ publications: [publish] });
+        .populate('user comments')
+
+
+    return res.json({ publications: [publish, comentarios] });
 });
 
 PublicationRouter.post('/addPublish', verify, async (req, res) => {
@@ -36,33 +36,42 @@ PublicationRouter.post('/addPublish', verify, async (req, res) => {
     console.log('req.body.text: ' + typeof req.body.text)
     console.log('req.body.text: ' + req.body.text)
 
-        console.log(req.body.text);
-        const publication = new Publication();
-        publication.user = req.user;
-        publication.text = (req.body.text && req.body.text.length >= 1) ? req.body.text : '';;
-        publication.created_At = moment().format('LLLL');
-        publication.imagePublication = (req.file && req.file.filename) ? req.file.filename : '';
-        let publishSaved = await publication.save();
-        let Savedpublish = await Publication.findOne({ _id: publishSaved._id }).populate('user');
+    console.log(req.body.text);
+    const publication = new Publication();
+    publication.user = req.user;
+    publication.text = (req.body.text && req.body.text.length >= 1) ? req.body.text : '';;
+    publication.created_At = moment().format('LLLL');
+    publication.imagePublication = (req.file && req.file.filename) ? req.file.filename : '';
+    let publishSaved = await publication.save();
+    let Savedpublish = await Publication.findOne({ _id: publishSaved._id }).populate('user');
 
-        return res.json({ Savedpublish });
+    return res.json({ Savedpublish });
 
-}); 
+});
 
-PublicationRouter.put('/addComment', verify, async (req,res) => {
-    console.log('Ruta para crear comentarios' , req.user)
+PublicationRouter.put('/addComment', verify, async (req, res) => {
+    let commentsIds = [];
+    console.log('Ruta para crear comentarios', req.user)
     console.log(req.body.text)
     let body = req.body;
+
     let comment = new Comments();
     comment.publicationId = body.publicationId;
     comment.user = body.user;
     comment.created_At = moment().format('L') + ' ' + moment().format('LTS');
     comment.text = body.text;
     let savedComent = await comment.save();
-    let commentDone = await Comments.findOne({_id: savedComent._id})
-    let updatedPublish = await Publication.findByIdAndUpdate(commentDone.publicationId, {comment: commentDone._id}, {new: true})
-        .populate('comment user')
-    return res.json({publishUpdated: [updatedPublish, commentDone]})
+    let commentDone = await Comments.findOne({ _id: savedComent._id })
+    let comentarios = await Comments.find({ publicationId: body.publicationId })
+        .populate('user publicationId')
+
+    /*comentarios.forEach(element => {
+        commentsIds.push(element._id);
+    })*/
+
+    let updatedPublish = await Publication.findByIdAndUpdate(commentDone.publicationId, { $set: { comments: comentarios } }, { new: true })
+        .populate('user comments')
+    return res.json({ publishUpdated: [updatedPublish, commentDone, comentarios] })
 })
 
 async function verify(req, res, next) {

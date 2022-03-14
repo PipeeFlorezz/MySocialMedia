@@ -22,6 +22,13 @@ export class CommentsService {
     console.log(this.apiUrlPublish);
   }
 
+  getCommentsPerPublish(id: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('authorization', this.getToken());
+
+    return this.http.get<Comment[]>(this.apiUrlscomments+ id, {headers: headers});
+  }
+
   makeComment(comment: Comment): Observable<any>{
     let datos = JSON.stringify(comment);
     let headers = new HttpHeaders().set('Content-Type', 'application/json')

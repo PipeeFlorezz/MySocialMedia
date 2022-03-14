@@ -3,6 +3,6 @@ export class Publication {
         public user: string,
         public text: string,
         public imagePublication: string,
-        public comment: string
+        public comments: string
     ){}
 }

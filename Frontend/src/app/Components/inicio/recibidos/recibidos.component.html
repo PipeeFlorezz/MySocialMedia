@@ -8,7 +8,8 @@
     <div class="card-header d-flex align-items-center headerMsj text-white">
         Mensaje de: {{messagge.emitter.surname}}
         <div class="imageHeader mx-2">
-            <img [src]="'http://localhost:3000/' + messagge.emitter.imagePath" class="img-card-top">
+            <img *ngIf="messagge.emitter.imagePath.length >= 1" [src]="'http://localhost:3000/' + messagge.emitter.imagePath" class="img-card-top">
+            <img *ngIf="messagge.emitter.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
         </div> 
     </div>
     <div class="card-body mensajesCard">

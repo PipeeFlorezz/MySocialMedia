@@ -24,11 +24,13 @@ export class InicioComponent implements OnInit {
   public text: any;
   public publications: any[];
   public publication: Publication;
-  public uploadFile: Array<File>;
+  //public uploadFile: Array<File>;
+  public uploadFile: any;
   public users: any[];
   public followeds: any[];
-  public publicationsIds: any[];
+  public commentsPublish: any[];
   public oficialPublications: any;
+  public newoficialPublications: any;
   public identity: any;
   public date: any;
   public comment: Comment;
@@ -46,11 +48,11 @@ export class InicioComponent implements OnInit {
   ) {
     this.commentCtrl = new FormControl('', []);
     this.oficialPublications = false;
-    this.publicationsIds = [];
+    this.commentsPublish = [];
     this.comments = [];
     this.publications = [];
     this.publication = new Publication('', '', '', '');
-    this.uploadFile = [];
+    //this.uploadFile = [];
     this.users = [];
     this.followeds = [];
     this.identity = this.usuarioService.getIdentity()
@@ -62,15 +64,16 @@ export class InicioComponent implements OnInit {
     $("#despliegueForm").on('click', function () {
       console.log('haciendo click en el formulario de publicacion')
       $('#formularioToggle').slideToggle('slow');
+
     })
 
 
-    
+
 
     this.getPublissh();
     this.getFollows();
     console.log(this.followeds);
-    console.log(this.publicationsIds);
+    console.log(this.commentsPublish);
     console.log(this.publications)
     this.getOficialPublish();
     console.log(this.identity)
@@ -97,13 +100,15 @@ export class InicioComponent implements OnInit {
         console.log(response.publishUpdated[0])
         console.log('Comentario guardado: ');
         console.log(response.publishUpdated[1])
+        console.log('comentarios de la publicacion');
+        console.log(response.publishUpdated[2])
         $(`#${publictionId}`).val('')
       }
     )
 
   }
 
-  cards(){
+  cards() {
     console.log(document.querySelectorAll('.pc .card-footer .postInteractions'))
     console.log($('.pc .card-footer .postInteractions'))
 
@@ -112,8 +117,10 @@ export class InicioComponent implements OnInit {
       let id: any = this.getAttribute('id');
       this.removeAttribute('id')
       console.log($(`#${id}`));
-      $(`#${id}`).slideToggle('fast');
-      this.setAttribute('id', id)
+      setTimeout(() => {
+        $(`#${id}`).slideToggle('slow');
+        this.setAttribute('id', id)
+      }, 550);
     })
     return;
   }
@@ -135,12 +142,9 @@ export class InicioComponent implements OnInit {
     this.publicationService.getPublishs().subscribe(
       response => {
         console.log(response.publications[0]);
+        console.log(response.publications[1]);
         this.publications = response.publications[0];
         console.log(this.publications)
-        response.publications[0].forEach((element: any) => {
-          console.log(element.user._id);
-          this.publicationsIds.push(element.user._id);
-        });
       }
     )
   }
@@ -151,8 +155,35 @@ export class InicioComponent implements OnInit {
       this.oficialPublications = this.publications.filter((element: any) => {
         return this.followeds.includes(element.user._id)
       });
+      /*this.oficialPublications.forEach((element: any) => {
+        element.comments = '';
+      });*/
       console.log(this.oficialPublications)
     }, 1000);
+  }
+
+
+  cartaPush(id: any) {
+    let comentsPerPublish = '';
+    this.commentService.getCommentsPerPublish(id).subscribe(
+      response => {
+        //console.log(response.comentsById);
+        comentsPerPublish = response.comentsById
+        console.log(comentsPerPublish)
+      }
+    )
+
+    setTimeout(() => {
+      this.oficialPublications.forEach((element: any) => {
+        if (element._id == id) {
+          element.comments = '';
+          element.comments = comentsPerPublish
+        }
+      });
+      console.log(this.oficialPublications)
+    }, 1000);
+
+
   }
 
 
@@ -165,17 +196,18 @@ export class InicioComponent implements OnInit {
           console.log(response.Savedpublish);
           this.oficialPublications.unshift(response.Savedpublish)
           console.log(this.oficialPublications)
+          this.uploadFile = '';
           setTimeout(() => {
             console.log($(".pc .card-footer .postInteractions").first())
             $(".pc .card-footer .postInteractions").first().on('click', function (ev) {
               console.log('Click en el input de la ultima publicacion')
               console.log(this.getAttribute('id'))
-               let id: any = this.getAttribute('id');
-               this.removeAttribute('id')
-               console.log($(`#${id}`));
-               $(`#${id}`).slideToggle('fast');
-               this.setAttribute('id', id)
-             })
+              let id: any = this.getAttribute('id');
+              this.removeAttribute('id')
+              console.log($(`#${id}`));
+              $(`#${id}`).slideToggle('fast');
+              this.setAttribute('id', id)
+            })
           }, 1000);
           publicationForm.reset();
         }
@@ -184,7 +216,8 @@ export class InicioComponent implements OnInit {
 
   imgPublication(event: any) {
     console.log(event)
-    this.uploadFile = <Array<File>>event.target.files[0];
+    // this.uploadFile = <Array<File>>event.target.files[0];
+    this.uploadFile = event.target.files[0];
     console.log(this.uploadFile);
   }
 }
