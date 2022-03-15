@@ -27,7 +27,7 @@
 
             <hr>
 
-            <h6 class="text-center tituoloColor"><span>Mensajeria</span></h6>
+            <h6 class="text-center tituoloColor mt-3"><span>Mensajeria</span></h6>
 
 
             <div class="buttonsMsgs">
@@ -66,7 +66,7 @@
 
         <div (click)="cartaPush(publication._id)" *ngFor="let publication of oficialPublications; let indice = index"
             class="card Pc">
-            <div class="card-header publishCards border border-danger">
+            <div class="card-header publishCards">
                 <div class="headerItems">
                     <div class="imageHeader">
                         <img *ngIf="publication.user.imagePath.length >= 1"
@@ -80,7 +80,7 @@
                         <span class="card-text"><a class="text-decoration-none text-white text-capitalize"
                                 [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname}}-{{(indice)}}</b></a>
                         </span>
-                        <span class="text-muted"><i>{{publication.created_At}}</i></span>
+                        <span><small><i>{{publication.created_At}}</i></small></span>
                     </div>
                 </div>
                 <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
@@ -88,7 +88,7 @@
             <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
                 <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top">
             </div>
-            <div class="card-footer border border-warning">
+            <div class="card-footer">
                 <hr class="my-2">
                 <div class="d-flex justify-content-between">
                     <span> likes </span>
@@ -101,12 +101,12 @@
 
                 <div id="{{indice}}" style="display: none;">
                     <div *ngFor="let comment of publication.comments" class="my-2">
-                        <div class="d-flex">
-                            <div class="imageHeader mx-2">
+                        <div class="d-flex align-items-start" style="position: relative;">
+                            <div class="imgComments mx-2">
                                 <img *ngIf="comment.user.imagePath && comment.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + comment.user.imagePath" class="img-card-top">
                                 <img *ngIf="comment.user.imagePath == '' && comment.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
                             </div>
-                            <div>
+                            <div class="comments">
                                 <span>{{comment.user.surname}}</span>
                                 <p>{{comment.text}}</p>
                             </div>

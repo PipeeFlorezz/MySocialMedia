@@ -103,6 +103,7 @@ export class InicioComponent implements OnInit {
         console.log('comentarios de la publicacion');
         console.log(response.publishUpdated[2])
         $(`#${publictionId}`).val('')
+        this.cartaPush(publictionId);
       }
     )
 

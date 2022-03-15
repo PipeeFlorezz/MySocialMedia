@@ -9,12 +9,11 @@
 }
 
 body {
-    color: #333;
-    background: #f2f2f2;
+    color: white;
+    background: #18191a;
     font-family: 'Open Sans',sans-serif;
     font-size: 16px;
     line-height: normal;
-    text-shadow: 1px 1px 1px #bf9c9c;
 }
 
 header > nav {
@@ -32,13 +31,22 @@ header > nav {
     min-height: 76.5vh;
 }
 
+.linksAutentication{
+    text-decoration: none;
+    color: darkgray;
+}
+
+.linksAutentication:hover{
+    text-decoration: none;
+    color: white;
+}
+
 .decorComponent .card{
     width: 30%;
     height: auto;
-    background: #fbf1d5;
-    border-top-color: #f5ba41 !important;
-    border-top: 3px solid #f5ba41!important;
-    box-shadow: 0px 0px 4px gray;
+    background: #242526;
+    border-top: 3px solid #242526 !important;
+    box-shadow: 0px 0px 2px gray;
 }
 
 .decorComponent .card h4{
@@ -48,14 +56,12 @@ header > nav {
     margin-top: 19px;
     width: 91%;
     border-radius: 8px;
-    background: #f5ba41;
-    box-shadow: 0px 0px 2px gray;
-
+    background: #242526;
 }
 
 .jumbotron {
     width: 90%;
-    background: #fbf1d5;
+    background: #242526;
     padding: 10px;
     font-family: 'Open Sans',sans-serif;
 }
@@ -80,7 +86,7 @@ header > nav {
     position: absolute !important;
     width: 300px;
     margin-right: 40px;
-    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+    background: #242526 !important;
 }
 
 
@@ -95,9 +101,10 @@ header > nav {
     z-index: 2 !important;
 }
 
+
 .listaUsuarios > li > a:hover {
-    color: black !important;
-    
+    color: white !important;
+    background-color: #282a2c !important;
 }
 
 .logOut {
@@ -123,6 +130,35 @@ header > nav {
     height: 90%;
     border-radius: 100%;
     outline: 1px solid gray;
+    outline-offset: 1px;
+}
+
+.comments {
+    margin-left: 50px;
+    background-color: #3a3b3c;
+    border-radius: 8px 8px 8px 8px;
+    padding: 10px;
+}
+
+.imgComments {
+    position: absolute;
+    top: -1;
+    left: -10px;
+    border-radius: 100%;
+    width: 47px;
+    height: 47px;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgComments img{
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    outline: 1px solid #242526;
     outline-offset: 1px;
 }
 
@@ -183,6 +219,8 @@ header > nav {
     height: 100%;
 } 
 
+
+
 .imageHeader {
     border-radius: 100%;
     width: 48px;
@@ -198,7 +236,7 @@ header > nav {
     width: 90%;
     height: 90%;
     border-radius: 100%;
-    outline: 1px solid gray;
+    outline: 1px solid #242526;
     outline-offset: 1px;
 }
 
@@ -222,7 +260,7 @@ header > nav {
 
 
 .publishCards {
-    background-color: #40b2a6; 
+    background-color: #242526; 
     padding: 5px;
     box-shadow: inset 0 -4px 0 0 rgb(0 0 0 / 30%);
 }
@@ -256,6 +294,7 @@ header > nav {
 .mensajesCard {
     position: relative !important;
     padding-top: 8px !important;
+    color: black !important;
 }
 
 .mensajesCard :nth-child(2){
@@ -334,12 +373,12 @@ font-weight: 550;
     left: 0;
     right: 0;
     z-index: 1;
-    box-shadow: 0px 1px 4px gray;
-    background: linear-gradient(to right,#009989 0,#4cb7ac 100%);
+    box-shadow: 0px 1px 0px gray;
+    background: #242526;
 }
 
 .imageLogo {
-    width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 10%;
     overflow: hidden;
@@ -366,10 +405,9 @@ font-weight: 550;
     height: auto;
     padding: 12px;
     padding-top: 24px;
-    background: #fbf1d5;
-    border-top-color: #f5ba41 !important;
-    border-top: 3px solid #f5ba41!important;
-    box-shadow: 1px 1px 5px gray;
+    background: #242526;
+    border-top: 3px solid #242526!important;
+    box-shadow: 1px 1px 2px gray;
 }
 
 .fondoUser {
@@ -385,10 +423,10 @@ font-weight: 550;
 }
 
 .yellowColor{
-   background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+   background: white;
    padding: 8px;
    border-radius: 0px 8px 8px 0px;
-   color: white;
+   color: black;
    text-transform: uppercase;
    margin-bottom: 15px;
    cursor: pointer;
@@ -397,10 +435,10 @@ font-weight: 550;
 }
 
 .tituoloColor{
-    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important; 
+    background: white; 
     padding: 8px;
     border-radius: 0px 8px 8px 0px;
-    color: white;
+    color: black;
     text-transform: uppercase;
     margin-bottom: 15px;
     display: block;
@@ -409,12 +447,17 @@ font-weight: 550;
 
 .btnColor {
     box-shadow: inset 0 -3px 0 0 rgb(0 0 0 / 20%);
-    background-color: #f5ba41; 
+    background-color: #242526; 
     color: white;
 }
 
+.btnColor:hover {
+    color: white !important;
+    background-color: rgb(45, 46, 49) !important; 
+}
+
 .headerMsj {
-    background: linear-gradient(to right,#009989 0,#4cb7ac 100%) !important;
+    background: #242526;
 }
 
 .nav {
@@ -422,16 +465,18 @@ font-weight: 550;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #f5ba41;
+    background-color: white;
+    color: black;
 }
 
+
 .nav-link {
-    color: #1e2127;
+    color: white;
 }
 
 .nav-link:hover {
-    color: #1e2127;
+    background-color: #2c2d31;
+    color: white;
 }
 
 .envRec { 
@@ -459,13 +504,14 @@ font-weight: 550;
 
 
 .Pc {
-    box-shadow: 0px 1px 4px gray;
+    box-shadow: 0px 1px 1px gray;
     margin-bottom: 7px !important;
 
 }
 
 .pc .card-footer {
     padding: 5px !important;
+    background-color: #242526;
 }
 
 .pc .card-footer form > div > input {

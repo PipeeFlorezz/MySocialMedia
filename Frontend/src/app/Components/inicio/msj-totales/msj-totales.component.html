@@ -1,5 +1,5 @@
 <div *ngFor="let messagge of messaggess" class="card mb-3 envRec">
-    <div class="card-header d-flex align-items-center headerMsj text-white">
+    <div class="card-header d-flex align-items-center headerMsj">
         {{messagge.emitter.surname}} envia a: {{messagge.reciever.surname}}
         <div class="imageHeader mx-2">
             <img *ngIf="messagge.reciever.imagePath.length >= 1" [src]="'http://localhost:3000/' + messagge.reciever.imagePath" class="img-card-top">
@@ -13,7 +13,7 @@
             <img *ngIf="messagge.emitter.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
         </div>
         <span class="card-text textEnviados">{{messagge.emitter.surname}} dice:</span>
-        <span class="text-muted card-text textEnviados">
+        <span class="card-text textEnviados">
             {{messagge.created_At}}
         </span>
 

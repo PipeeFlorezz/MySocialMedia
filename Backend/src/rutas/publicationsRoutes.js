@@ -61,7 +61,7 @@ PublicationRouter.put('/addComment', verify, async (req, res) => {
     comment.created_At = moment().format('L') + ' ' + moment().format('LTS');
     comment.text = body.text;
     let savedComent = await comment.save();
-    let commentDone = await Comments.findOne({ _id: savedComent._id })
+    let commentDone = await Comments.findOne({ _id: savedComent._id }).populate('user publicationId')
     let comentarios = await Comments.find({ publicationId: body.publicationId })
         .populate('user publicationId')
 
