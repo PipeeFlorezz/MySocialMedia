@@ -27,7 +27,7 @@
                     </button>
                     <button *ngIf="followeds.indexOf(user._id) >= 0" class="btn btnColor"
                         (mouseover)="isOverButton(user._id)" (mouseleave)="leavingButton(user._id)"
-                        [class.btn-danger]="user._id == isOver" (click)="deleteFollow(user._id)">
+                        (click)="deleteFollow(user._id)">
                         <span *ngIf="user._id == isOver; else noOver">
                             <span>Dejar de seguir</span>
                         </span>

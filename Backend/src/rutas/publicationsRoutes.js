@@ -74,6 +74,14 @@ PublicationRouter.put('/addComment', verify, async (req, res) => {
     return res.json({ publishUpdated: [updatedPublish, commentDone, comentarios] })
 })
 
+PublicationRouter.delete('/delete/:id', verify, async (req, res) => {
+    console.log('Ruta para eliminar publicacion: ' + req.params.id);
+    if(req.params.id){
+        let deleted = await Publication.findByIdAndDelete(req.params.id);
+        return res.json({Deleted: deleted});
+    }
+})
+
 async function verify(req, res, next) {
     if (!req.headers.authorization) return res.json({ noToken: 'No hay token' });
 

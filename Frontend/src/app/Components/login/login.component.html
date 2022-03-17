@@ -1,17 +1,20 @@
 <div class="row Component decorComponent">
-    <div *ngIf="success" class="alert alert-primary text-center text-uppercase text-white" role="alert">
-        Te has logueado exitosamente.
-      </div>
 
-      <div *ngIf="noUser" class="alert alert-danger text-center text-uppercase text-white" role="alert">
-        Este usuario no existe, <a [routerLink]="['/register']">Regístrate.</a>
-      </div>
-      
-      <div *ngIf="noDatos" class="alert alert-warning text-center text-uppercase text-white" role="alert">
-          Datos incompletos.
-      </div>
+    <div class="col-11 col-sm-11 col-md-8 col-lg-8 col-xl-7 col-xxl-5">
+        <div style="background-color: #242526;" *ngIf="success" class="alert text-center text-uppercase text-white" role="alert">
+            Te has logueado exitosamente.
+        </div>
+    
+        <div style="background-color: #242526;" *ngIf="noUser" class="alert text-center text-uppercase text-white" role="alert">
+            Este usuario no existe, <a class="linksAutentication" [routerLink]="['/register']">Regístrate.</a>
+        </div>
+    
+        <div style="background-color: #242526;" *ngIf="noDatos" class="alert text-center text-uppercase text-white" role="alert">
+            Datos incompletos.
+        </div>
+    </div>
 
-      <div class="col-11 col-sm-11 col-md-8 col-lg-8 col-xl-7 col-xxl-5">
+    <div class="col-11 col-sm-11 col-md-8 col-lg-8 col-xl-7 col-xxl-5">
         <div class="card w-100">
             <div>
                 <h4 class="text-center card-text text-white">Login</h4>
@@ -19,14 +22,14 @@
             <div class="card-body">
                 <form #formularioLogin="ngForm" (ngSubmit)="envioLogin(formularioLogin)">
                     <div class="form-group my-3">
-                        <input type="email" name="email" #email="ngModel" placeholder="Email"
-                        class="form-control" [(ngModel)]="usuario.email">
+                        <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control mb-2"
+                            [(ngModel)]="usuario.email">
                         <span *ngIf="!email.value && email.touched">El email es obligatorio</span>
 
                     </div>
                     <div class="form-group my-3">
                         <input type="password" name="password" #password="ngModel" placeholder="Password"
-                        class="form-control" [(ngModel)]="usuario.password">
+                            class="form-control mb-2" [(ngModel)]="usuario.password">
                         <span *ngIf="!password.value && password.touched">La contraseña es obligatoria</span>
 
                     </div>
@@ -35,9 +38,10 @@
                     </div>
                 </form>
                 <div class="d-flex justify-content-center">
-                    <span class="mx-1 text-muted">¿No te has registrado ?</span> <span class="mx-1"><a [routerLink]="['/register']" class="linksAutentication">Regístrate</a></span> 
+                    <span class="mx-1 text-muted">¿No te has registrado ?</span> <span class="mx-1"><a
+                            [routerLink]="['/register']" class="linksAutentication">Regístrate</a></span>
                 </div>
             </div>
         </div>
-      </div>
+    </div>
 </div>

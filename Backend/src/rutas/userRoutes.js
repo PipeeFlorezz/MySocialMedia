@@ -75,7 +75,9 @@ router.post('/registro', async (req, res) => {
     console.log('Email: ' + req.body.email);
     console.log('Password: ' + req.body.password);
     let params = req.body;
-    if (req.body.email && req.body.password && req.body.surname) {
+    if (req.body.email && req.body.email.length >= 1 && 
+        req.body.password && req.body.password.length >= 1 &&
+         req.body.surname && req.body.surname.length >= 1) {
         let userFound = await User.findOne({email: req.body.email, surname: req.body.surname});
         if(userFound){
             return res.json({userFound: 'Este usuario ya existe, registrate con otro'})
@@ -91,7 +93,7 @@ router.post('/registro', async (req, res) => {
             return res.json([userSaved, token]);
         }
     } else {
-        return res.json({ response: 'Es obligatorio mandar los datos, envialos' });
+        return res.json({ noDatos: 'Es obligatorio mandar los datos, envialos' });
     }
 });
 

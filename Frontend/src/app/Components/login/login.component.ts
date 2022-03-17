@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           return;
         }
         if(response.noUser){
-          alert(response.noUser);  
+          //alert(response.noUser);  
           formularioLogin.reset();
           this.noUser = true;
           return;

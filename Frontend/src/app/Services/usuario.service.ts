@@ -60,6 +60,7 @@ export class UsuarioService {
     return this.http.post<Usuario>(this.apiUrlUsers + 'registro', datos, { headers: headers })
   }
 
+
   subirFile(archivo: any): Promise<any>{
     let formData = new FormData();
     formData.append('image', archivo);

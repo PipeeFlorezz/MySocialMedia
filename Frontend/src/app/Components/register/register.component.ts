@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   public userFound: boolean;
   public formData: FormData;
   public userUpdated: any;
+  public noDatos: boolean;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
     //this.uploadFile = [];
     this.success = false;
     this.userFound = false;
+    this.noDatos = false;
   }
 
   ngOnInit(): void {
@@ -42,6 +44,13 @@ export class RegisterComponent implements OnInit {
         if (response.userFound) {
           this.userFound = true;
           setTimeout(() => this.userFound = false, 5000);
+          formularioRegister.reset();
+          return;
+        }
+
+        if(response.noDatos){
+          this.noDatos = true;
+          setTimeout(() => this.noDatos = false, 5000);
           formularioRegister.reset();
           return;
         }

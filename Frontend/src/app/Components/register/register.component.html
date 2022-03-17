@@ -1,11 +1,17 @@
 <div class="row decorComponent Component">
 
-    <div *ngIf="success" class="alert alert-primary text-center text-uppercase text-white" role="alert">
-        Te has regístrado exitosamente.
-    </div>
-
-    <div *ngIf="userFound" class="alert alert-danger text-center text-uppercase text-white" role="alert">
-        Este usuario ya existe
+    <div class="col-11 col-sm-11 col-md-8 col-lg-8 col-xl-7 col-xxl-5">
+        <div style="background-color: #242526;" *ngIf="success" class="alert text-center text-uppercase text-white" role="alert">
+            Te has regístrado exitosamente.
+        </div>
+    
+        <div style="background-color: #242526;" *ngIf="userFound" class="alert text-center text-uppercase text-white" role="alert">
+            Este usuario ya existe, intenta con otro.
+        </div>
+    
+        <div style="background-color: #242526;" *ngIf="noDatos" class="alert text-center text-uppercase text-white" role="alert">
+            Datosincompletos.
+        </div>
     </div>
 
     <div class="col-11 col-sm-11 col-md-8 col-lg-8 col-xl-7 col-xxl-5">
@@ -16,16 +22,22 @@
             <div class="card-body">
                 <form #formularioRegister="ngForm" (ngSubmit)="envioSignup(formularioRegister)">
                     <div class="form-group my-3">
-                        <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control"
+                        <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control mb-2"
                             [(ngModel)]="usuario.email">
+                            <span *ngIf="!email.value && email.touched">El email es obligatorio</span>
+
                     </div>
                     <div class="form-group my-3">
-                        <input type="text" name="surname" #surname="ngModel" placeholder="Surname" class="form-control"
+                        <input type="text" name="surname" #surname="ngModel" placeholder="Surname" class="form-control mb-2"
                             [(ngModel)]="usuario.surname">
+                            <span *ngIf="!surname.value && surname.touched">El surname es obligatorio</span>
+
                     </div>
                     <div class="form-group my-3">
                         <input type="password" name="password" #password="ngModel" placeholder="Password"
-                            class="form-control" [(ngModel)]="usuario.password">
+                            class="form-control mb-2" [(ngModel)]="usuario.password">
+                            <span *ngIf="!password.value && password.touched">La contraseña es obligatoria</span>
+
                     </div>
                     <div class="form-group my-3">
                         <label for="formFileSm" class="form-label">Elige una imagen</label>

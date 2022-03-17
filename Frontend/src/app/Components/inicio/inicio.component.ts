@@ -109,6 +109,19 @@ export class InicioComponent implements OnInit {
 
   }
 
+  deletePublish(publicationId: any){
+    console.log('Has dado click para eliminar una publicacion')
+    this.publicationService.deletePublish(publicationId).subscribe(
+      response => {
+        console.log(response.Deleted._id);
+        let publications: any = this.oficialPublications.filter((element: any) => {
+            return element._id != response.Deleted._id;
+          });
+          this.oficialPublications = publications;
+      }
+    )
+  }
+
   cards() {
     console.log(document.querySelectorAll('.pc .card-footer .postInteractions'))
     console.log($('.pc .card-footer .postInteractions'))

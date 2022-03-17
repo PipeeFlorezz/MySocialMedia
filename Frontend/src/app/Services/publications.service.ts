@@ -34,6 +34,13 @@ export class PublicationsService {
     return this.http.post(this.apiUrlPublish + 'addPublish', formData, {headers: headers});
   }
 
+  deletePublish(id: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('authorization', this.getToken());
+
+    return this.http.delete(this.apiUrlPublish+ 'delete/'+id, {headers: headers});                            
+  }
+
   getToken(): any {
     let token = localStorage.getItem('Token');
     if (!token) {

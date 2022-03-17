@@ -92,11 +92,25 @@ export class UsuariosComponent implements OnInit {
           }
         }
 
-        if(this.back){
-          this.pendiente = this.usuarios.pop();
-          this.usuarios.unshift(this.usersNP[(this.indexUser - 1)]);
-          return;
-        }
+        /*if(this.back == true && this.page > '1' && this.page < this.pages){
+          this.usuarios = this.usuarios.filter((element: any) => {
+            return element._id != this.identify._id;
+          })
+          if(this.usuarios.length < 5){
+            this.usuarios.unshift(this.usersNP[(this.indexUser - 1)]);
+            this.pendiente = this.identify._id;
+            return;
+          }
+          if(this.usuarios.length == 5 && this.pendiente){
+            this.usuarios.pop();
+            this.usuarios.unshift(this.usersNP[(this.indexUser - 1)]);
+            return;
+          }
+
+          if(this.usuarios.length == 5){
+            return;
+          }
+        }*/
 
         if(this.page >= 2 && this.pendiente == false){
           return;
@@ -108,7 +122,7 @@ export class UsuariosComponent implements OnInit {
           this.usuarios = this.usuarios.filter((elemento: any) => {
             return elemento._id != this.identify._id;
           });
-          // Si estoy
+          // Si estoy me saco y agrego el que estaba pendiente.
           if(this.usuarios.length < 5 && this.pendiente){
             this.usuarios.unshift(this.pendiente);
             this.pendiente = false;
