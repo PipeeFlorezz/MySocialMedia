@@ -46,44 +46,6 @@
                 </div>
             </div>
         </div>
-        <div class="card w-100">
-            <div>
-                <h4 class="text-center card-text text-white">Registro</h4>
-            </div>
-            <div class="card-body">
-                <form #formularioRegister="ngForm" (ngSubmit)="envioSignup(formularioRegister)">
-                    <div class="form-group my-3">
-                        <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control mb-2"
-                            [(ngModel)]="usuario.email">
-                            <span *ngIf="!email.value && email.touched">El email es obligatorio</span>
-
-                    </div>
-                    <div class="form-group my-3">
-                        <input type="text" name="surname" #surname="ngModel" placeholder="Surname" class="form-control mb-2"
-                            [(ngModel)]="usuario.surname">
-                            <span *ngIf="!surname.value && surname.touched">El surname es obligatorio</span>
-
-                    </div>
-                    <div class="form-group my-3">
-                        <input type="password" name="password" #password="ngModel" placeholder="Password"
-                            class="form-control mb-2" [(ngModel)]="usuario.password">
-                            <span *ngIf="!password.value && password.touched">La contraseña es obligatoria</span>
-
-                    </div>
-                    <div class="form-group my-3">
-                        <label for="formFileSm" class="form-label">Elige una imagen</label>
-                        <input class="form-control form-control-sm" id="formFileSm" type="file"
-                            (change)="imgRegister($event)">
-                    </div>
-                    <div class="d-grid my-3">
-                        <button class="btn btnColor">Enviar</button>
-                    </div>
-                </form>
-                <div class="d-flex justify-content-center">
-                    <span class="mx-1 text-muted">¿Ya te has registrado ?</span> <span class="mx-1"><a [routerLink]="['/login']" class="linksAutentication">Inicia sesion</a></span> 
-                </div>
-            </div>
-        </div>
     </div>
     <div class="col-12 col-lg-6">
         <div *ngIf="Oficialpublications.length == 0">
