@@ -4,12 +4,16 @@
             <div class="card-body d-flex flex-column">
                 <div class="d-flex cardProfile">
                     <div class="imgProfileUser">
-                        <img *ngIf="usuarioProfile.imagePath.length >= 1" [src]="'http://localhost:3000/' + usuarioProfile.imagePath" class="img-card-top">
-                        <img *ngIf="usuarioProfile.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                        <img *ngIf="usuarioProfile.imagePath.length >= 1"
+                            [src]="'http://localhost:3000/' + usuarioProfile.imagePath" class="img-card-top">
+                        <img *ngIf="usuarioProfile.imagePath.length == 0"
+                            [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                            class="img-card-top">
                     </div>
                     <div class="profilInfo">
                         <div *ngIf="usuarioProfile._id != identify._id">
-                            <h6 *ngIf="followsUserIds.indexOf(identify._id) >= 1; else noFollow"><span class="badge bg-secondary">Te sigue</span></h6>
+                            <h6 *ngIf="followsUserIds.indexOf(identify._id) >= 1; else noFollow"><span
+                                    class="badge bg-secondary">Te sigue</span></h6>
                             <ng-template #noFollow>
                                 <h6><span class="badge bg-secondary">No te sigue</span></h6>
                             </ng-template>
@@ -18,13 +22,13 @@
                         <span>{{usuarioProfile.surname}}</span>
                         <div class="mt-2" *ngIf="usuarioProfile._id != identify._id">
                             <button *ngIf="followedsIds.indexOf(usuarioProfile._id) == -1" class="btn btn-success"
-                            (click)="addFollow(usuarioProfile._id)">
+                                (click)="addFollow(usuarioProfile._id)">
                                 Seguir
                             </button>
                             <button *ngIf="followedsIds.indexOf(usuarioProfile._id) >= 0" class="btn btnColor"
-                            (mouseover)="isOverButton(usuarioProfile._id)"
-                            (mouseleave)="leavingButton(usuarioProfile._id)"
-                            (click)="deleteFollow(usuarioProfile._id)">
+                                (mouseover)="isOverButton(usuarioProfile._id)"
+                                (mouseleave)="leavingButton(usuarioProfile._id)"
+                                (click)="deleteFollow(usuarioProfile._id)">
                                 <span *ngIf="usuarioProfile._id == isOver; else noOver">
                                     <span>Dejar de seguir</span>
                                 </span>
@@ -42,42 +46,120 @@
                 </div>
             </div>
         </div>
+        <div class="card w-100">
+            <div>
+                <h4 class="text-center card-text text-white">Registro</h4>
+            </div>
+            <div class="card-body">
+                <form #formularioRegister="ngForm" (ngSubmit)="envioSignup(formularioRegister)">
+                    <div class="form-group my-3">
+                        <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control mb-2"
+                            [(ngModel)]="usuario.email">
+                            <span *ngIf="!email.value && email.touched">El email es obligatorio</span>
+
+                    </div>
+                    <div class="form-group my-3">
+                        <input type="text" name="surname" #surname="ngModel" placeholder="Surname" class="form-control mb-2"
+                            [(ngModel)]="usuario.surname">
+                            <span *ngIf="!surname.value && surname.touched">El surname es obligatorio</span>
+
+                    </div>
+                    <div class="form-group my-3">
+                        <input type="password" name="password" #password="ngModel" placeholder="Password"
+                            class="form-control mb-2" [(ngModel)]="usuario.password">
+                            <span *ngIf="!password.value && password.touched">La contraseña es obligatoria</span>
+
+                    </div>
+                    <div class="form-group my-3">
+                        <label for="formFileSm" class="form-label">Elige una imagen</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file"
+                            (change)="imgRegister($event)">
+                    </div>
+                    <div class="d-grid my-3">
+                        <button class="btn btnColor">Enviar</button>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-center">
+                    <span class="mx-1 text-muted">¿Ya te has registrado ?</span> <span class="mx-1"><a [routerLink]="['/login']" class="linksAutentication">Inicia sesion</a></span> 
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-12 col-lg-6">
         <div *ngIf="Oficialpublications.length == 0">
             <div class="alert alert-warning" role="alert">
-                <p class="card-text text-center">No haz hecho publicaciones</p>                  
+                <p class="card-text text-center">No haz hecho publicaciones</p>
             </div>
         </div>
 
         <h6 *ngIf="Oficialpublications.length >= 1 " class="text-center tituoloColor"><span>Publicaciones</span></h6>
 
 
-        <div *ngFor="let publication of Oficialpublications" class="card Pc">
+        <div (click)="cartaPush(publication._id)" *ngFor="let publication of Oficialpublications; let indice = index"
+            class="card Pc">
             <div class="card-header publishCards">
                 <div class="headerItems">
                     <div class="imageHeader">
-                        <img *ngIf="usuarioProfile.imagePath.length >= 1" [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
-                        <img *ngIf="usuarioProfile.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                        <img *ngIf="publication.user.imagePath.length >= 1"
+                            [src]="'http://localhost:3000/' + publication.user.imagePath" class="img-card-top">
+                        <img *ngIf="publication.user.imagePath.length == 0"
+                            [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                            class="img-card-top">
 
                     </div>
                     <div>
-                        <span class="card-text"><a class="text-decoration-none text-white"
-                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname }}</b></a>
+                        <span class="card-text"><a class="text-decoration-none text-white text-capitalize"
+                                [routerLink]="['/profile', publication.user._id]"><b>{{publication.user.surname}}</b></a>
                         </span>
-                        <span class="text-muted"><i>{{publication.created_At}}</i></span>
+                        <span><small><i>{{publication.created_At}}</i></small></span>
                     </div>
+                    <span *ngIf="publication.user._id == identify._id" style="margin-left: auto;cursor: pointer;"><a (click)="deletePublish(publication._id)"><i class="fa fa-window-close" aria-hidden="true"></i></a></span>
                 </div>
-                <p class="card-text my-3 text-white">{{publication.text}}</p>
+                <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
             </div>
-            <div>
-                <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
-                    <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top w-100">
+            <div class="imagePublication" *ngIf="publication.imagePublication.length >= 1 ">
+                <img [src]="'http://localhost:3000/' + publication.imagePublication" class="img-card-top">
+            </div>
+            <div class="card-footer">
+                <hr class="my-2">
+                <div class="d-flex justify-content-between">
+                    <span> likes </span>
+                    <span>10</span>
+                    <span class="postInteractions" style="cursor: pointer;" id="{{indice}}"> comentar </span>
+
+                </div>
+
+                <hr class="my-2">
+
+                <div id="{{indice}}" style="display: none;">
+                    <div *ngFor="let comment of publication.comments" class="my-2">
+                        <div class="d-flex align-items-start" style="position: relative;">
+                            <div class="imgComments mx-2">
+                                <img *ngIf="comment.user.imagePath && comment.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + comment.user.imagePath" class="img-card-top">
+                                <img *ngIf="comment.user.imagePath == '' && comment.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                            </div>
+                            <div class="comments">
+                                <span>{{comment.user.surname}}</span>
+                                <p>{{comment.text}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group my-3 d-flex align-items-center">
+                            <div class="imageFooter">
+                                <img *ngIf="identify.imagePath.length >= 1"
+                                    [src]="'http://localhost:3000/' + identify.imagePath" class="img-card-top">
+                                <img *ngIf="identify.imagePath.length == 0"
+                                    [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                                    class="img-card-top">
+                            </div>
+                            <input [formControl]="commentCtrl" (keyup.enter)="makeComment(publication._id, $event)"
+                                type="text" placeholder="Escribe un comentario..." id="{{publication._id}}"
+                                class="form-control" required>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
- 

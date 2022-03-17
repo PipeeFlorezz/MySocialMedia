@@ -40,6 +40,7 @@ export class PublicationsService {
 
     return this.http.delete(this.apiUrlPublish+ 'delete/'+id, {headers: headers});                            
   }
+  
 
   getToken(): any {
     let token = localStorage.getItem('Token');

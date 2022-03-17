@@ -80,7 +80,20 @@ PublicationRouter.delete('/delete/:id', verify, async (req, res) => {
         let deleted = await Publication.findByIdAndDelete(req.params.id);
         return res.json({Deleted: deleted});
     }
-})
+});
+
+PublicationRouter.put('/update/:id', verify, async (req, res) => {
+    console.log('Ruta para actualizar publicacion: ' + req.params.id);
+    console.log('Req.body: ');
+    console.log(req.body)
+    let newDatos = req.body;
+    if(req.params.id){
+        let updatedPublish = await Publication.findByIdAndUpdate(req.params.id, newDatos, {new:true});
+        return res.json({updated: updatedPublish});
+    }
+});
+
+
 
 async function verify(req, res, next) {
     if (!req.headers.authorization) return res.json({ noToken: 'No hay token' });

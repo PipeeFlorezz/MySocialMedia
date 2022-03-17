@@ -82,7 +82,8 @@
                         </span>
                         <span><small><i>{{publication.created_At}}</i></small></span>
                     </div>
-                    <span style="margin-left: auto;cursor: pointer;"><a (click)="deletePublish(publication._id)"><i class="fa fa-window-close" aria-hidden="true"></i></a></span>
+
+                    <span *ngIf="publication.user._id == identity._id" style="margin-left: auto;cursor: pointer;"><a (click)="deletePublish(publication._id)"><i class="fa fa-window-close" aria-hidden="true"></i></a></span>
                 </div>
                 <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
             </div>

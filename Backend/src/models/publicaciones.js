@@ -5,7 +5,8 @@ let schema = new Schema({
     comments: [{type: Schema.ObjectId, ref: 'Comment'}],
     text: String,
     imagePublication: String,
-    created_At: String
+    created_At: String,
+    likes: Number
 }, {
     timestamps: true,
     versionkey: false

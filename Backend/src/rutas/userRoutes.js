@@ -131,6 +131,16 @@ router.put('/subirImagen', verify, async (req, res) => {
     }
 });
 
+router.put('/update/:id', verify, async (req, res) => {
+    console.log('Ruta para actualizar usuario: ' + req.params.id);
+    console.log('Req.body: ');
+    console.log(req.body)
+    let newDatos = req.body;
+    if(req.params.id){
+        let updatedUser = await Publication.findByIdAndUpdate(req.params.id, newDatos, {new:true});
+        return res.json({updated: updatedUser});
+    }
+});
 
 async function verify(req, res, next) {
     if (!req.headers.authorization) return res.json({ noToken: 'No hay token' });

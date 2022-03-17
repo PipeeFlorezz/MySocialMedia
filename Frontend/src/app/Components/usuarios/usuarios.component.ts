@@ -92,7 +92,7 @@ export class UsuariosComponent implements OnInit {
           }
         }
 
-        /*if(this.back == true && this.page > '1' && this.page < this.pages){
+        if(this.back == true && this.page > '1' && this.page < this.pages){
           this.usuarios = this.usuarios.filter((element: any) => {
             return element._id != this.identify._id;
           })
@@ -110,7 +110,7 @@ export class UsuariosComponent implements OnInit {
           if(this.usuarios.length == 5){
             return;
           }
-        }*/
+        }
 
         if(this.page >= 2 && this.pendiente == false){
           return;

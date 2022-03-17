@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { InicioModule } from './Components/inicio/inicio.module'
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +35,8 @@ import { ProfileComponent } from './Components/profile/profile.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    InicioModule
+    InicioModule,
+    ReactiveFormsModule
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
