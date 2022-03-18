@@ -60,6 +60,14 @@ export class UsuarioService {
     return this.http.post<Usuario>(this.apiUrlUsers + 'registro', datos, { headers: headers })
   }
 
+  updateUser(usuario: Usuario, id: any): Observable<any> {
+    let datos = JSON.stringify(usuario);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('authorization', this.getToken());
+
+    return this.http.put<Usuario>(this.apiUrlUsers + '/update/' + id, datos, { headers: headers })
+  }
+
 
   subirFile(archivo: any): Promise<any>{
     let formData = new FormData();

@@ -46,7 +46,9 @@
                 </div>
             </div>
         </div>
+
     </div>
+
     <div class="col-12 col-lg-6">
         <div *ngIf="Oficialpublications.length == 0">
             <div class="alert alert-warning" role="alert">
@@ -75,7 +77,9 @@
                         </span>
                         <span><small><i>{{publication.created_At}}</i></small></span>
                     </div>
-                    <span *ngIf="publication.user._id == identify._id" style="margin-left: auto;cursor: pointer;"><a (click)="deletePublish(publication._id)"><i class="fa fa-window-close" aria-hidden="true"></i></a></span>
+                    <span *ngIf="publication.user._id == identify._id" style="margin-left: auto;cursor: pointer;"><a
+                            (click)="deletePublish(publication._id)"><i class="fa fa-window-close"
+                                aria-hidden="true"></i></a></span>
                 </div>
                 <p *ngIf="publication.text.length >= 1" class="card-text my-3 text-white">{{publication.text}}</p>
             </div>
@@ -97,8 +101,11 @@
                     <div *ngFor="let comment of publication.comments" class="my-2">
                         <div class="d-flex align-items-start" style="position: relative;">
                             <div class="imgComments mx-2">
-                                <img *ngIf="comment.user.imagePath && comment.user.imagePath.length >= 1" [src]="'http://localhost:3000/' + comment.user.imagePath" class="img-card-top">
-                                <img *ngIf="comment.user.imagePath == '' && comment.user.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+                                <img *ngIf="comment.user.imagePath && comment.user.imagePath.length >= 1"
+                                    [src]="'http://localhost:3000/' + comment.user.imagePath" class="img-card-top">
+                                <img *ngIf="comment.user.imagePath == '' && comment.user.imagePath.length == 0"
+                                    [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'"
+                                    class="img-card-top">
                             </div>
                             <div class="comments">
                                 <span>{{comment.user.surname}}</span>

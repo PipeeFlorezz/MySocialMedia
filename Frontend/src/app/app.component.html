@@ -32,8 +32,9 @@
               {{identity.surname}} 
             </a>
             <ul class="dropdown-menu sombra listaUsuarios" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item text-white" [routerLink]="['/profile', identity._id]">Profile</a></li>
-              <li><a class="dropdown-item text-white logOut" (click)="logOut()">LogOut</a></li>
+              <li><a class="dropdown-item text-white" [routerLink]="['/profile', identity._id]">Perfil</a></li>
+              <li><a class="dropdown-item text-white" [routerLink]="['/editInfo']">Editar información</a></li>
+              <li><a class="dropdown-item text-white logOut" (click)="logOut()">Salir</a></li>
             </ul>
           </li>
         </ul>

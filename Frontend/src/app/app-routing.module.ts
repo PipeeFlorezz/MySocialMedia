@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RegisterComponent } from './Components/register/register.component';
@@ -9,6 +9,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { AboutComponent } from './Components/about/about.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
+import { EditInfoComponent } from './Components/edit-info/edit-info.component';
 
 const routes: Routes = [
   {path: '', component: AboutComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'seguidos', component: SeguidosComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path:'profile/:id', component: ProfileComponent}
+  {path:'profile/:id', component: ProfileComponent},
+  {path: 'editInfo', component: EditInfoComponent}
 ];
 
 @NgModule({

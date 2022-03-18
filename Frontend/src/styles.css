@@ -41,8 +41,15 @@ header > nav {
     color: white;
 }
 
+.editaInfo {
+    max-width: 240px;
+    padding: 10px;
+    background-color: #242526;
+    margin-bottom: 18px;
+    border-radius: 0px 5px 5px 0px;
+}
+
 .decorComponent .card{
-    width: 30%;
     height: auto;
     background: #242526;
     border-top: 3px solid #242526 !important;
@@ -206,7 +213,7 @@ header > nav {
 
 
 .navsItems {
-    border-radius: 3px;
+    border-radius: 8px;
     box-shadow: 0px 0px 11px gray inset !important;
 }
 
@@ -478,9 +485,11 @@ font-weight: 550;
     color: white;
 }
 
-.nav-link:hover {
-    background-color: #2c2d31;
+a:hover, .nav-link:hover{
+    background-color: #404147;
     color: white;
+    border-radius: 5px;
+    padding: 9px;
 }
 
 .envRec { 

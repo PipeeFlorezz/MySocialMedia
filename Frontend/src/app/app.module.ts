@@ -16,7 +16,7 @@ import { SeguidoresComponent } from './Components/seguidores/seguidores.componen
 import { LoginComponent } from './Components/login/login.component';
 import { AboutComponent } from './Components/about/about.component';
 import { ProfileComponent } from './Components/profile/profile.component';
-
+import { EditInfoComponent } from './Components/edit-info/edit-info.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { ProfileComponent } from './Components/profile/profile.component';
     SeguidoresComponent,
     LoginComponent,
     AboutComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditInfoComponent
   ],
   imports: [
     CommonModule,

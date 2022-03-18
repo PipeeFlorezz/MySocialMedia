@@ -135,9 +135,14 @@ router.put('/update/:id', verify, async (req, res) => {
     console.log('Ruta para actualizar usuario: ' + req.params.id);
     console.log('Req.body: ');
     console.log(req.body)
-    let newDatos = req.body;
     if(req.params.id){
-        let updatedUser = await Publication.findByIdAndUpdate(req.params.id, newDatos, {new:true});
+        let updatedUser = 
+        await User.findByIdAndUpdate(req.params.id, {
+            email: req.body.email,
+            surname: req.body.surname,
+            password: req.body.password
+        }, {new:true});
+        
         return res.json({updated: updatedUser});
     }
 });

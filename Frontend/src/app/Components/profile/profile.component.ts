@@ -76,6 +76,10 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  editMyInfo(formEdit: NgForm){
+    console.log(formEdit);
+  }
+
   cards() {
     console.log(document.querySelectorAll('.pc .card-footer .postInteractions'))
     console.log($('.pc .card-footer .postInteractions'))
