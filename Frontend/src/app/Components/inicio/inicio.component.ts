@@ -8,6 +8,7 @@ import { FollowsService } from 'src/app/Services/follows.service';
 import { UsuarioService } from 'src/app/Services/usuario.service';
 import { CommentsService } from 'src/app/Services/comments.service';
 import { DatePipe } from '@angular/common';
+import { ApiUrls } from 'src/app/apiUrls/apiRoutes';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -21,6 +22,8 @@ interface HtmlInputEvent extends Event {
 
 export class InicioComponent implements OnInit {
 
+  public like: boolean;
+  public apiUrlPublish: string;
   public text: any;
   public publications: any[];
   public publication: Publication;
@@ -46,6 +49,8 @@ export class InicioComponent implements OnInit {
     private datePipe: DatePipe,
     private commentService: CommentsService
   ) {
+    this.like = false;
+    this.apiUrlPublish = ApiUrls.publications;
     this.commentCtrl = new FormControl('', []);
     this.oficialPublications = false;
     this.commentsPublish = [];
@@ -68,8 +73,6 @@ export class InicioComponent implements OnInit {
     })
 
 
-
-
     this.getPublissh();
     this.getFollows();
     console.log(this.followeds);
@@ -82,6 +85,7 @@ export class InicioComponent implements OnInit {
     }, 1000);
 
   }
+
 
   makeComment(publictionId: any, evt: any) {
     /*console.log(document.getElementById(`${publictionId}`)?.nodeValue)
@@ -109,15 +113,15 @@ export class InicioComponent implements OnInit {
 
   }
 
-  deletePublish(publicationId: any){
+  deletePublish(publicationId: any) {
     console.log('Has dado click para eliminar una publicacion')
     this.publicationService.deletePublish(publicationId).subscribe(
       response => {
         console.log(response.Deleted._id);
         let publications: any = this.oficialPublications.filter((element: any) => {
-            return element._id != response.Deleted._id;
-          });
-          this.oficialPublications = publications;
+          return element._id != response.Deleted._id;
+        });
+        this.oficialPublications = publications;
       }
     )
   }
@@ -174,6 +178,43 @@ export class InicioComponent implements OnInit {
       });*/
       console.log(this.oficialPublications)
     }, 1000);
+  }
+
+  publicationLikes(id: any) {
+    if(!this.like){
+      this.like = true;
+    }else{
+      this.like = false;
+    }
+    console.log(this.like);
+    this.giveLike(id, this.like)
+    
+ } 
+  async giveLike(id: any, like: any): Promise<any>{
+    //let like: number = 1
+    let formData = new FormData();
+    formData.append('publishId', id);
+    formData.append('like', like);
+
+    await fetch(this.apiUrlPublish+ 'update/like/'+id, {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        'authorization': this.usuarioService.getToken()
+      }
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response.likes)
+      this.oficialPublications.forEach((element: any) => {
+        if(element._id == id){
+          element.likes = response.likes
+        }
+      })
+    })
+    .catch(error => console.log(error));
+
+    console.log('Una sentencia despues del async await')
   }
 
 

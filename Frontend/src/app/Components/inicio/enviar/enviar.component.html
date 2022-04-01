@@ -16,11 +16,11 @@
             
             <div class="form-group my-2">
                 <textarea name="text" #text="ngModel" id="" cols="5" rows="5" class="form-control"
-                [(ngModel)]="messagge.text"></textarea>
+                [(ngModel)]="messagge.text" required></textarea>
             </div>
 
             <div class="d-grid form-group my-2">
-                <button class="btn btnColor">Enviar</button>
+                <button class="btn btnColor" [disabled]="!formMensajeria.form.valid">Enviar</button>
             </div>
 
         </form>

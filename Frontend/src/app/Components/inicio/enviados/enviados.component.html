@@ -1,4 +1,4 @@
-<div *ngIf="messagess.length == 0">
+<div *ngIf="messagess && messagess.length == 0">
     <div class="alert alert-secondary" role="alert">
         <p class="card-text text-center">No has enviado ningun mensaje</p>
     </div>
@@ -9,7 +9,8 @@
     <div class="card-header d-flex align-items-center headerMsj text-white">
         Enviado a: {{messagge.reciever.surname}}
         <div class="imageHeader mx-2">
-            <img [src]="'http://localhost:3000/' + messagge.reciever.imagePath" class="img-card-top">
+            <img *ngIf="messagge.reciever.imagePath.length >= 1" [src]="'http://localhost:3000/' + messagge.reciever.imagePath" class="img-card-top">
+            <img *ngIf="messagge.reciever.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
         </div>
     </div>
     <div class=" card-body mensajesCard">

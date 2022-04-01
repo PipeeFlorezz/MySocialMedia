@@ -6,7 +6,7 @@ let schema = new Schema({
     text: String,
     imagePublication: String,
     created_At: String,
-    likes: Number
+    likes: {type: Number, default: 0}
 }, {
     timestamps: true,
     versionkey: false

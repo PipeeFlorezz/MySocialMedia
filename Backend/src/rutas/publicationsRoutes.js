@@ -91,6 +91,35 @@ PublicationRouter.put('/update/:id', verify, async (req, res) => {
         let updatedPublish = await Publication.findByIdAndUpdate(req.params.id, newDatos, {new:true});
         return res.json({updated: updatedPublish});
     }
+}); 
+
+PublicationRouter.put('/update/like/:id', verify, async (req, res) => {
+    console.log('Ruta para actualizar like: ' + req.params.id);
+    console.log('like: ' + req.body.like)
+    console.log('publsihId: '+ req.body.publishId)
+    let like = req.body.like;
+    if(like == 'false'){
+        let Publish = await Publication.findOne({_id: req.params.id});
+        if(Publish){
+            //console.log(Publish)
+            Publish.likes = Publish.likes - 1;
+            if(Publish.likes == -1){
+                Publish.likes = 0;
+            }
+            console.log(Publish)
+            let  updatedPublish =  await Publish.save();
+            return res.send({likes: updatedPublish.likes});
+        }
+    }else{
+        let Publish = await Publication.findOne({_id: req.params.id});
+        if(Publish){
+            //console.log(Publish)
+            Publish.likes = Publish.likes + 1;
+            console.log(Publish)
+            let  updatedPublish =  await Publish.save();
+            return res.send({likes: updatedPublish.likes});
+        }
+    }
 });
 
 

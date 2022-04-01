@@ -1,3 +1,9 @@
+<div *ngIf="messaggess && messaggess.length == 0">
+    <div class="alert alert-secondary" role="alert">
+        <p class="card-text text-center">No se han enviado mensajes.</p>
+    </div>
+</div>
+
 <div *ngFor="let messagge of messaggess" class="card mb-3 envRec">
     <div class="card-header d-flex align-items-center headerMsj">
         {{messagge.emitter.surname}} envia a: {{messagge.reciever.surname}}

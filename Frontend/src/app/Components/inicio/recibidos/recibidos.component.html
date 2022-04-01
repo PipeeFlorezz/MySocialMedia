@@ -1,4 +1,4 @@
-<div *ngIf="messagess.length == 0">
+<div *ngIf="messagess && messagess.length == 0">
     <div class="alert alert-secondary" role="alert">
         <p class="card-text text-center">No has recibido ningun mensaje</p>                  
     </div>
@@ -15,4 +15,4 @@
     <div class="card-body mensajesCard">
         <p class="card-text mt-2">{{messagge.text}}</p>
     </div>
-</div>
+</div> 

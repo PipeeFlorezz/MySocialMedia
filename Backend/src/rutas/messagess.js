@@ -18,12 +18,12 @@ routerMessagess.get('/enviadosRecibidos/:id?', verify, async (req, res) => {
     console.log('Ruta demensajes');
     if(req.params.id){
         let msjSended = await Messages.find({emitter: req.params.id})
-        .sort('-createdAt')
+        .sort('-created_At')
         .populate('emitter reciever');
         return res.json({msjSended});
     }else{
         let msjGotten = await Messages.find({reciever: req.user})
-        .sort('-createdAt')
+        .sort('-created_At')
         .populate('emitter reciever');
         return res.json({msjGotten}); 
     }
