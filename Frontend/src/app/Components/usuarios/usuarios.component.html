@@ -1,14 +1,26 @@
 <div class="row Component">
-    <div *ngIf="!usuarios" class="cargando">
-        Cargando...
-    </div>
     <div class="col-md-10 col-lg-9 col-xl-8 col-xxl-6 mx-auto">
-        <div *ngIf="!usuarios" class="cargando">
+        <div *ngIf="!users" class="cargando">
             Cargando...
         </div>
-
-        <div class="card usuariosCards" *ngFor="let user of usuarios">
+        <div class="card usuariosCards" *ngIf="identify">
             <div class="card-body d-flex">
+                <div>
+                    <div class="userImg">
+                        <img *ngIf="identify.imagePath.length >= 1" [src]="'http://localhost:3000/' + identify.imagePath" class="img-card-top">
+                        <img *ngIf="identify.imagePath.length == 0" [src]="'http://localhost:3000/noProfile/' + 'no-profile-picture-icon-19.jpg'" class="img-card-top">
+
+                    </div>
+                </div>
+                <div class="usersInfo">
+                    <p class="card-text fw-bold"><a [routerLink]="['/profile', identify._id]">{{identify.email}}</a></p>
+                    <span class="text-muted">{{identify.surname}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card usuariosCards" *ngFor="let user of users">
+            <div class="card-body d-flex" *ngIf="user._id != identify._id">
                 <div>
                     <div class="userImg">
                         <img *ngIf="user.imagePath.length >= 1" [src]="'http://localhost:3000/' + user.imagePath" class="img-card-top">
@@ -17,7 +29,7 @@
                     </div>
                 </div>
                 <div class="usersInfo">
-                    <p class="card-text fw-bold">{{user.email}}</p>
+                    <p class="card-text fw-bold"><a [routerLink]="['/profile', user._id]">{{user.email}}</a></p>
                     <span class="text-muted">{{user.surname}}</span>
                 </div>
                 <div class="ButtonsFollows" *ngIf="user._id != identify._id">
@@ -38,15 +50,11 @@
                 </div>
             </div>
         </div>
-        <ul class="nav nav-pills float-end navegationUsers">
-            <li class="nav-item border navsItems mx-1" *ngIf="page > 1">
-                <a  (click)="moveBack(true)" class="nav-link btn btn-primary" [routerLink]="['/usuarios', prevPage]"
-                    [routerLinkActive]="['active']"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+        <ul class="nav nav-pills navegationUsers" *ngIf="page != pages">
+            <li class="nav-item border navsItems mx-1">
+                <a  (click)="moreUsers()" class="nav-link btn btn-primary" 
+                    [routerLinkActive]="['active']">Mas usuarios
                 </a>
-            </li>
-            <li class="nav-item navsItems" *ngIf="page != pages">
-                <a  (click)="moveForward(true)" class="nav-link btn btn-primary" [routerLink]="['/usuarios', nextPage]"
-                    [routerLinkActive]="['active']"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
             </li>
         </ul>
     </div>

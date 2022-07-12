@@ -38,12 +38,12 @@ export class MessaggessService {
     }
   }
 
-  addMessagge(messagge: Messaggess): Observable<any>{
+  addMessagge(messagge: Messaggess, id: any = 1): Observable<any>{
     let datos = JSON.stringify(messagge);
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                    .set('authorization', this.getToken());
 
-    return this.http.post(this.apiUrlMessaggess+'addMessage', datos, {headers: headers})
+    return this.http.post(this.apiUrlMessaggess+'addMessage/' + id, datos, {headers: headers})
   }
 
   getToken(): any{

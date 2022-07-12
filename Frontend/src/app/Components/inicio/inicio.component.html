@@ -58,13 +58,13 @@
     </div>
 
     <div class="col-12 col-lg-5">
-        <div *ngIf="oficialPublications && oficialPublications.length == 0">
+        <div *ngIf="publications && publications.length == 0">
             <div class="alert alert-warning" role="alert">
                 <p class="card-text text-center">Para ver publicaciones haz una o sigue a un usuario</p>
             </div>
         </div>
 
-        <div (click)="cartaPush(publication._id)" *ngFor="let publication of oficialPublications; let indice = index"
+        <div (click)="cartaPush(publication._id)" *ngFor="let publication of publications; let indice = index"
             class="card Pc">
             <div class="card-header publishCards">
                 <div class="headerItems">
@@ -94,7 +94,7 @@
                 <hr class="my-2">
                 <div class="d-flex justify-content-between butonsPublish">
                     <span (click)="publicationLikes(publication._id)" style="cursor: pointer;"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> likes </span>
-                    <span style="cursor: pointer;"><i class="fa fa-heart" aria-hidden="true"></i> {{publication.likes}}</span>
+                    <span style="cursor: pointer;"><i class="fa fa-heart" aria-hidden="true"></i> {{publication.numberLikes}}</span>
                     <span class="postInteractions" style="cursor: pointer;" id="{{indice}}"><i class="fa fa-comments-o" aria-hidden="true"></i> comentar </span>
                 </div>
 

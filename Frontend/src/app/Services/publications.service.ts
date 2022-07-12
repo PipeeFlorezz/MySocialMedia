@@ -19,10 +19,14 @@ export class PublicationsService {
     this.apiUrlPublish = ApiUrls.publications;
   }
 
-  getPublishs(): Observable<any>{
+  getPublishs(id?: any): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                    .set('authorization', this.getToken());
-    return this.http.get<Publication[]>(this.apiUrlPublish, {headers: headers})
+    if(id){
+      return this.http.get<Publication[]>(this.apiUrlPublish + id, {headers: headers});
+    }else{
+      return this.http.get<Publication[]>(this.apiUrlPublish, {headers: headers});
+    }                         
   }
 
   addPublication(publication: Publication, archivo?: any): Observable<any> {

@@ -6,11 +6,9 @@ let schema = new Schema({
     text: String,
     imagePublication: String,
     created_At: String,
-    likes: {type: Number, default: 0}
-}, {
-    timestamps: true,
-    versionkey: false
+    likes: [{type: Schema.ObjectId, ref: 'Like'}],
+    numberLikes: {type: Number , default: 0}
 });
 
- 
+
 module.exports = model('Publication', schema);

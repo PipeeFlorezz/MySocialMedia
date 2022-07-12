@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { InicioModule } from './Components/inicio/inicio.module'
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+//import { MomentModule } from 'angular-moment';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { EditInfoComponent } from './Components/edit-info/edit-info.component';
     EditInfoComponent
   ],
   imports: [
+    //MomentModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule,

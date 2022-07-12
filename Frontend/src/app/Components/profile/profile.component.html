@@ -50,16 +50,16 @@
     </div>
 
     <div class="col-12 col-lg-6">
-        <div *ngIf="Oficialpublications.length == 0">
+        <div *ngIf="!publicationss || publicationss.length == 0">
             <div class="alert alert-warning" role="alert">
-                <p class="card-text text-center">No haz hecho publicaciones</p>
+                <p class="card-text text-center">No hay publicaciones hechas</p>
             </div>
         </div>
 
-        <h6 *ngIf="Oficialpublications.length >= 1 " class="text-center tituoloColor"><span>Publicaciones</span></h6>
+        <h6 *ngIf="publicationss && publicationss.length >= 1 " class="text-center tituoloColor"><span>Publicaciones</span></h6>
 
 
-        <div (click)="cartaPush(publication._id)" *ngFor="let publication of Oficialpublications; let indice = index"
+        <div (click)="cartaPush(publication._id)" *ngFor="let publication of publicationss; let indice = index"
             class="card Pc">
             <div class="card-header publishCards">
                 <div class="headerItems">
@@ -89,9 +89,9 @@
             <div class="card-footer">
                 <hr class="my-2">
                 <div class="d-flex justify-content-between">
-                    <span> likes </span>
-                    <span>10</span>
-                    <span class="postInteractions" style="cursor: pointer;" id="{{indice}}"> comentar </span>
+                    <span (click)="publicationLikes(publication._id)" style="cursor: pointer;"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> likes </span>
+                    <span style="cursor: pointer;"><i class="fa fa-heart" aria-hidden="true"></i> {{publication.numberLikes}}</span>
+                    <span class="postInteractions" style="cursor: pointer;" id="{{indice}}"><i class="fa fa-comments-o" aria-hidden="true"></i> comentar </span>
 
                 </div>
 

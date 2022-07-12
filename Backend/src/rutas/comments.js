@@ -33,8 +33,9 @@ routerComments.get('/:id', verify, async (req, res) => {
     console.log('ruta get comentarios por id: ' + req.user)
 
 
-    let coments =  await Comments.find({publicationId: req.params.id}).populate('user publicationId')
-        .populate('user publicationId')
+    let coments =  await Comments.find({publicationId: req.params.id})
+                                 .populate('user publicationId')
+        
 
     return res.json({comentsById: coments});
 })

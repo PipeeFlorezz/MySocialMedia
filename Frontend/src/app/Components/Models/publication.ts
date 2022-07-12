@@ -3,6 +3,7 @@ export class Publication {
         public user: string,
         public text: string,
         public imagePublication: string,
-        public comments: string
+        public comments: string,
+        public likes: string
     ){}
 }

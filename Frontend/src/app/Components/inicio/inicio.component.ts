@@ -4,11 +4,13 @@ import { Publication } from '../Models/publication';
 import { PublicationsService } from '../../Services/publications.service';
 import { Usuario } from '../Models/usuario';
 import { Comment } from '../Models/comments';
+import { Likes } from '../Models/likes';
 import { FollowsService } from 'src/app/Services/follows.service';
 import { UsuarioService } from 'src/app/Services/usuario.service';
 import { CommentsService } from 'src/app/Services/comments.service';
 import { DatePipe } from '@angular/common';
 import { ApiUrls } from 'src/app/apiUrls/apiRoutes';
+//import { stringify } from 'querystring';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -22,7 +24,7 @@ interface HtmlInputEvent extends Event {
 
 export class InicioComponent implements OnInit {
 
-  public like: boolean;
+  public like: Likes;
   public apiUrlPublish: string;
   public text: any;
   public publications: any[];
@@ -32,7 +34,6 @@ export class InicioComponent implements OnInit {
   public users: any[];
   public followeds: any[];
   public commentsPublish: any[];
-  public oficialPublications: any;
   public newoficialPublications: any;
   public identity: any;
   public date: any;
@@ -49,19 +50,19 @@ export class InicioComponent implements OnInit {
     private datePipe: DatePipe,
     private commentService: CommentsService
   ) {
-    this.like = false;
     this.apiUrlPublish = ApiUrls.publications;
     this.commentCtrl = new FormControl('', []);
-    this.oficialPublications = false;
     this.commentsPublish = [];
     this.comments = [];
     this.publications = [];
-    this.publication = new Publication('', '', '', '');
+    this.publication = new Publication('', '', '', '', '');
     //this.uploadFile = [];
     this.users = [];
     this.followeds = [];
     this.identity = this.usuarioService.getIdentity()
     this.comment = new Comment('', this.identity._id, '', '');
+    this.like = new Likes(this.identity._id, '');
+
 
   }
 
@@ -78,7 +79,6 @@ export class InicioComponent implements OnInit {
     console.log(this.followeds);
     console.log(this.commentsPublish);
     console.log(this.publications)
-    this.getOficialPublish();
     console.log(this.identity)
     setTimeout(() => {
       this.cards()
@@ -87,12 +87,13 @@ export class InicioComponent implements OnInit {
   }
 
 
-  makeComment(publictionId: any, evt: any) {
+   makeComment(publictionId: any, evt: any) {
     /*console.log(document.getElementById(`${publictionId}`)?.nodeValue)
     /console.log(this.commentCtrl.value);
     console.log(typeof $(`#${publictionId}`).val());
     console.log($(`#${publictionId}`).val());
-    this.text = $(`#${publictionId}`).val();*/
+    this.text = $(`#${publictionId}`).val(); */
+
     this.comment.publicationId = publictionId;
     this.comment.text = this.commentCtrl.value;
     console.log(this.comment)
@@ -106,10 +107,34 @@ export class InicioComponent implements OnInit {
         console.log(response.publishUpdated[1])
         console.log('comentarios de la publicacion');
         console.log(response.publishUpdated[2])
-        $(`#${publictionId}`).val('')
+        $(`#${publictionId}`).val(' ')
         this.cartaPush(publictionId);
       }
     )
+
+  }
+
+  cartaPush(id: any) {
+    let comentsPerPublish = '';
+
+    this.commentService.getCommentsPerPublish(id).subscribe(
+      response => {
+        //console.log(response.comentsById);
+        comentsPerPublish = response.comentsById
+        console.log(comentsPerPublish)
+      }
+    )
+
+    setTimeout(() => {
+      this.publications.forEach((element: any) => {
+        if (element._id == id) {
+          element.comments = '';
+          element.comments = comentsPerPublish
+        }
+      });
+      console.log(this.publications)
+    }, 1000);
+
 
   }
 
@@ -118,10 +143,10 @@ export class InicioComponent implements OnInit {
     this.publicationService.deletePublish(publicationId).subscribe(
       response => {
         console.log(response.Deleted._id);
-        let publications: any = this.oficialPublications.filter((element: any) => {
+        let publications: any = this.publications.filter((element: any) => {
           return element._id != response.Deleted._id;
         });
-        this.oficialPublications = publications;
+        this.publications = publications;
       }
     )
   }
@@ -163,54 +188,44 @@ export class InicioComponent implements OnInit {
         console.log(response.publications[1]);
         this.publications = response.publications[0];
         console.log(this.publications)
+        console.log(this.publications[2])
       }
     )
   }
 
-  getOficialPublish() {
-    setTimeout(() => {
-      console.log(this.publications)
-      this.oficialPublications = this.publications.filter((element: any) => {
-        return this.followeds.includes(element.user._id)
-      });
-      /*this.oficialPublications.forEach((element: any) => {
-        element.comments = '';
-      });*/
-      console.log(this.oficialPublications)
-    }, 1000);
-  }
 
   publicationLikes(id: any) {
-    if(!this.like){
-      this.like = true;
-    }else{
-      this.like = false;
-    }
-    console.log(this.like);
-    this.giveLike(id, this.like)
-    
+    this.giveLike(id)
  } 
-  async giveLike(id: any, like: any): Promise<any>{
+  async giveLike(id: any): Promise<any>{
     //let like: number = 1
+    this.like.publication = id;
     let formData = new FormData();
-    formData.append('publishId', id);
-    formData.append('like', like);
-
+    formData.append('user', this.like.user);
+    formData.append('publication', this.like.publication);
     await fetch(this.apiUrlPublish+ 'update/like/'+id, {
       method: 'PUT',
-      body: formData,
+      body: formData, 
       headers: {
         'authorization': this.usuarioService.getToken()
-      }
+      }  
     })
     .then(response => response.json())
     .then(response => {
-      console.log(response.likes)
-      this.oficialPublications.forEach((element: any) => {
-        if(element._id == id){
-          element.likes = response.likes
-        }
-      })
+      console.log(response.lks)
+      if(response.likes){
+        this.publications.forEach((element: any) => {
+          if(element._id == id){
+            element.numberLikes = response.likes.NumberLikes;
+          }
+        });
+      }else {
+        this.publications.forEach((element: any) => {
+          if(element._id == id){ 
+            element.numberLikes = response.lks;
+          }
+        }); 
+      }
     })
     .catch(error => console.log(error));
 
@@ -218,28 +233,7 @@ export class InicioComponent implements OnInit {
   }
 
 
-  cartaPush(id: any) {
-    let comentsPerPublish = '';
-    this.commentService.getCommentsPerPublish(id).subscribe(
-      response => {
-        //console.log(response.comentsById);
-        comentsPerPublish = response.comentsById
-        console.log(comentsPerPublish)
-      }
-    )
 
-    setTimeout(() => {
-      this.oficialPublications.forEach((element: any) => {
-        if (element._id == id) {
-          element.comments = '';
-          element.comments = comentsPerPublish
-        }
-      });
-      console.log(this.oficialPublications)
-    }, 1000);
-
-
-  }
 
 
 
@@ -248,19 +242,21 @@ export class InicioComponent implements OnInit {
     this.publicationService.addPublication(this.publication, this.uploadFile)
       .subscribe(
         response => {
+          console.log(response.noText);
           console.log(response.Savedpublish);
-          this.oficialPublications.unshift(response.Savedpublish)
-          console.log(this.oficialPublications)
+          console.log(response.populatedPublish);
+          this.publications.unshift(response.Savedpublish)
+          console.log(this.publications)
           this.uploadFile = '';
           setTimeout(() => {
-            console.log($(".pc .card-footer .postInteractions").first())
-            $(".pc .card-footer .postInteractions").first().on('click', function (ev) {
+            console.log($(".pc .card-footer .postInteractions"))
+            $(".pc .card-footer .postInteractions").on('click', function (ev) {
               console.log('Click en el input de la ultima publicacion')
               console.log(this.getAttribute('id'))
               let id: any = this.getAttribute('id');
               this.removeAttribute('id')
               console.log($(`#${id}`));
-              $(`#${id}`).slideToggle('fast');
+              $(`#${id}`).slideToggle('slow');
               this.setAttribute('id', id)
             })
           }, 1000);
@@ -269,7 +265,7 @@ export class InicioComponent implements OnInit {
       )
   }
 
-  imgPublication(event: any) {
+  imgPublication(event: any) { 
     console.log(event)
     // this.uploadFile = <Array<File>>event.target.files[0];
     this.uploadFile = event.target.files[0];

@@ -4,6 +4,7 @@ import { FollowsService } from '../../../Services/follows.service';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from 'src/app/Services/usuario.service';
 import { MessaggessService } from '../../../Services/messaggess.service'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-enviar',
   templateUrl: './enviar.component.html',
@@ -19,7 +20,8 @@ export class EnviarComponent implements OnInit {
   constructor(
     private messaggessService: MessaggessService,
     private followService: FollowsService,
-    private usuarioServices: UsuarioService
+    private usuarioServices: UsuarioService,
+    private router: Router
   ) { 
     this.followeds = [];
     this.messagges = [];
@@ -51,8 +53,14 @@ export class EnviarComponent implements OnInit {
     this.messaggessService.addMessagge(this.messagge)
       .subscribe(
         response => {
-          console.log(response.mesage)
+          console.log(response.mesage);
+          console.log(response.params);
+          console.log(response.wrong);
+
           formMensajeria.reset()
+
+          this.router.navigate(['/inicio/enviados']);
+
         } 
       )
   }

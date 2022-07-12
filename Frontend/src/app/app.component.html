@@ -6,19 +6,13 @@
         <img src="../assets/imgs/angular.jpg"  alt="ImageLogo">
       </div>
       <a class="navbar-brand text-white" [routerLink]="['/']">MySocialApp</a>
-      <span class="glyphicon glyphicon-circle-arrow-left"></span>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav" *ngIf="identity">
           <li class="nav-item">
             <a class="nav-link text-white" [routerLink]="['/inicio']" [routerLinkActive]="['active']">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" [routerLink]="['/usuarios', page]"
-            [routerLinkActive]="['active']">Usuarios </a>
+            <a class="nav-link text-white" [routerLink]="['/usuarios', page]" [routerLinkActive]="['active']">Usuarios </a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto" *ngIf="identity">

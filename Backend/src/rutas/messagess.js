@@ -29,11 +29,23 @@ routerMessagess.get('/enviadosRecibidos/:id?', verify, async (req, res) => {
     }
 });
 
-routerMessagess.post('/addMessage', verify, async (req, res) => {
-    console.log(req.user);
-    console.log('req.body.text: ' + req.body.text);
+routerMessagess.post('/addMessage/:id', verify, async (req, res) => {
     let mesage = new Messages();
-    if(req.body.text && req.user){
+    let datos = req.body;
+    let params = req.params.id;
+    if(req.body.reciever){
+        mesage.emitter = datos.emitter;
+        mesage.reciever = datos.reciever;
+        mesage.created_At = moment().format('L') +' ' + moment().format('LTS');
+        mesage.text = datos.text;
+        await mesage.save();
+
+        return res.status(200).json({mesage, params});
+    }else {
+        return res.json({wrong: 'Elige a quien enviar el mensaje'});
+    }
+
+    /*if(req.body.reciever && req.user){
         mesage.emitter = req.body.emitter;
         mesage.reciever = req.body.reciever;
         mesage.created_At = moment().format('L') +' ' + moment().format('LTS');
@@ -43,7 +55,7 @@ routerMessagess.post('/addMessage', verify, async (req, res) => {
         return res.status(200).json({mesage});
     }else {
         return res.status(404).json({response: 'Envia completamente los datos'});
-    }
+    }*/
 });
 
 async function verify(req, res, next){

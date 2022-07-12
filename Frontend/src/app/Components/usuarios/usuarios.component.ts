@@ -5,6 +5,7 @@ import { FollowsService } from '../../Services/follows.service';
 import { Follow } from '../Models/follows';
 import { ActivatedRoute, Params } from '@angular/router';
 
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -16,11 +17,8 @@ export class UsuariosComponent implements OnInit {
   public followeds: any[];
   public page: any;
   public pages: any;
-  public back: any;
-  public forward: any;
-  public usuarios: Usuario[];
-  public usersNP: Usuario[];
-  public OficialUsuarios: Usuario[];
+  public users: Usuario[];
+  public OficialUsers: Usuario[];
   public nextPage: any;
   public prevPage: any;
   public isOver: any;
@@ -33,149 +31,94 @@ export class UsuariosComponent implements OnInit {
     private followServices: FollowsService,
     private route: ActivatedRoute
   ) {
-      this.isOver = 0;
-      this.OficialUsuarios = [];
-      this.followeds = [];
-      this.usuarios = [];
-      this.usersNP = [];
-      this.identify = this.usuarioService.getIdentity();
-      this.follow = new Follow(this.identify._id, '');
-   }
+    this.isOver = 0;
+    this.OficialUsers = [];
+    this.followeds = [];
+    this.users = [];
+    this.identify = this.usuarioService.getIdentity();
+    this.follow = new Follow(this.identify._id, '');
+  }
 
   ngOnInit(): void {
-    this.getUsersNoPaginados();
     console.log(this.identify)
     this.getFollows();
     console.log(this.followeds);
+    console.log('pendiente = ' + this.pendiente);
 
     this.route.params.subscribe(params => {
       this.page = parseInt(params['page']);
-      if(!this.page){
+      if (!this.page) {
         this.page = 1;
-      }else{
+      } else {
         this.nextPage = this.page + 1;
         this.prevPage = this.page - 1;
-        if(this.prevPage <= 0){
+        if (this.prevPage <= 0) {
           this.prevPage = 1;
         }
-  
+
         this.getUsers(this.page);
       }
     })
   }
 
 
-  getUsers(page: any){
-    
+  getUsers(page: any) {
+
     this.usuarioService.getUsers(page).subscribe(
       response => {
         console.log(response);
-        this.usuarios = response.users;
+        this.users = response.users;
         this.page = response.page;
         this.pages = response.pages;
-        this.indexUser = (this.page - 1) * (response.itemPerPage);
-        console.log(this.usersNP[(this.indexUser - 1)]);
-
-        if(this.page == '1'){
-          this.usuarios = this.usuarios.filter((elemento: any) => {
-            return elemento._id != this.identify._id;
-          });
-          if(this.usuarios.length < 5){
-            this.usuarios.unshift(this.identify);
-            this.pendiente = false;
-            return;
-          }
-          if(this.usuarios.length == 5){
-            this.usuarios.unshift(this.identify);
-            this.pendiente = this.usuarios.pop();
-            return;
-          }
-        }
-
-        if(this.back == true && this.page > '1' && this.page < this.pages){
-          this.usuarios = this.usuarios.filter((element: any) => {
-            return element._id != this.identify._id;
-          })
-          if(this.usuarios.length < 5){
-            this.usuarios.unshift(this.usersNP[(this.indexUser - 1)]);
-            this.pendiente = this.identify._id;
-            return;
-          }
-          if(this.usuarios.length == 5 && this.pendiente){
-            this.usuarios.pop();
-            this.usuarios.unshift(this.usersNP[(this.indexUser - 1)]);
-            return;
-          }
-
-          if(this.usuarios.length == 5){
-            return;
-          }
-        }
-
-        if(this.page >= 2 && this.pendiente == false){
-          return;
-        }
-
-        if(this.page >= 2 && this.pendiente){
-
-          // Averiguo si estoy en esta pagina
-          this.usuarios = this.usuarios.filter((elemento: any) => {
-            return elemento._id != this.identify._id;
-          });
-          // Si estoy me saco y agrego el que estaba pendiente.
-          if(this.usuarios.length < 5 && this.pendiente){
-            this.usuarios.unshift(this.pendiente);
-            this.pendiente = false;
-            return;
-          }
-
-          // Si no estoy
-          if(this.usuarios.length == 5){
-            this.usuarios.unshift(this.pendiente);
-            this.pendiente = this.usuarios.pop();
-            return;
-          }
-        }
-
       }
     )
   }
 
-  moveBack(param: any){
-    this.back = param;
-    this.forward = false;
-    console.log('this.back: ' + this.back, 'this.forward: ' + this.forward)
+  moreUsers(){
+    console.log('calling more users');
+
+    let page = parseInt(this.page);
+    page = page + 1;
+    console.log(typeof page, page);
+    let usersA = this.users;
+    let usersB;
+
+    this.usuarioService.getUsers(page).subscribe(
+      response => {
+        console.log(response);
+        usersB = response.users;
+        this.users = usersA.concat(usersB);
+        this.page = response.page;
+        this.pages = response.pages;
+        console.log(this.page);
+        $("html, body").animate({scrollTop: $('body').prop("scrollHeight")}, 100)
+      }
+    )
+
   }
 
-  moveForward(param: any){
-    this.forward = param;
-    this.back = false;
-    console.log('this.back: ' + this.back, 'this.forward: ' + this.forward)
-
-  }
-
-  isOverButton(tf: any){
+  isOverButton(tf: any) {
     this.isOver = tf;
     console.log(this.isOver)
   }
 
-  leavingButton(tf: any){
-    this.isOver = 0; 
+  leavingButton(tf: any) {
+    this.isOver = 0;
     console.log(this.isOver)
   }
 
-  deleteFollow(userid: any){
+  deleteFollow(userid: any) {
     this.followServices.deleteFollow(userid).subscribe(
       response => {
         console.log(response);
         this.followeds = this.followeds.filter((elemento: any) => {
           return elemento != userid;
-        }); 
+        });
       }
     )
   }
 
-  addFollow(userId: any){
+  addFollow(userId: any) {
     console.log(userId)
     this.follow.followed = userId;
     this.followeds.push(userId)
@@ -186,7 +129,7 @@ export class UsuariosComponent implements OnInit {
     )
   }
 
-  getFollows(){
+  getFollows() {
     this.followServices.getFollows().subscribe(
       response => {
         console.log(response)
@@ -198,15 +141,10 @@ export class UsuariosComponent implements OnInit {
     )
   }
 
-  getUsersNoPaginados(){
-    this.usuarioService.usersNoPaginados().subscribe(
-      response => {
-        console.log(response.usersNoPaginados)
-        this.usersNP = response.usersNoPaginados;
-      }
-    )
-  }
-
 
 
 }
+
+/* 
+  https://www.youtube.com/watch?v=AKHCg5aNbGo
+*/

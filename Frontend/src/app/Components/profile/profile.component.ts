@@ -8,6 +8,9 @@ import { FollowsService } from 'src/app/Services/follows.service';
 import { PublicationsService } from 'src/app/Services/publications.service';
 import { Follow } from '../Models/follows';
 import { CommentsService } from 'src/app/Services/comments.service';
+import { ApiUrls } from 'src/app/apiUrls/apiRoutes';
+import { Likes } from '../Models/likes';
+
 
 //import { InicioComponent } from '../inicio/inicio.component';
 @Component({
@@ -19,6 +22,7 @@ import { CommentsService } from 'src/app/Services/comments.service';
 export class ProfileComponent implements OnInit {
 
   public usuarioProfile: any;
+  public apiUrlPublish: string;
   public followings: any;
   public followeds: any;
   public publications: any;
@@ -33,6 +37,7 @@ export class ProfileComponent implements OnInit {
   public commentCtrl: any;
   public comment: Comment;
   public comments: Comment[]
+  public like: Likes;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +47,7 @@ export class ProfileComponent implements OnInit {
     private commentService: CommentsService
 
   ) { 
+    this.apiUrlPublish = ApiUrls.publications;
     this.comments = [];
     this.commentCtrl = new FormControl('', []);
       this.identify = this.usuarioService.getIdentity()
@@ -54,6 +60,8 @@ export class ProfileComponent implements OnInit {
       this.comment = new Comment('', this.identify._id, '', '');
       this.comments = [];
       this.commentCtrl = new FormControl('', []);
+      this.like = new Likes(this.identify._id, '');
+
   }
 
   ngOnInit(): void {
@@ -71,9 +79,61 @@ export class ProfileComponent implements OnInit {
           console.log(this.usuarioProfile, this.identify)
           this.getStats(this.usuarioProfile._id)
           this.getPublissh(params['id']);
+          
         }
       )
     })
+  }
+
+  publicationLikes(id: any) {
+    this.giveLike(id)
+ } 
+  async giveLike(id: any): Promise<any>{
+    //let like: number = 1
+    this.like.publication = id;
+    let formData = new FormData();
+    formData.append('user', this.like.user);
+    formData.append('publication', this.like.publication);
+    await fetch(this.apiUrlPublish+ 'update/like/'+id, {
+      method: 'PUT',
+      body: formData, 
+      headers: {
+        'authorization': this.usuarioService.getToken()
+      }  
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response.lks)
+      if(response.likes){
+        this.publicationss.forEach((element: any) => {
+          if(element._id == id){
+            element.numberLikes = response.likes.NumberLikes;
+          }
+        });
+      }else {
+        this.publicationss.forEach((element: any) => {
+          if(element._id == id){ 
+            element.numberLikes = response.lks;
+          }
+        }); 
+      }
+    })
+    .catch(error => console.log(error));
+
+    console.log('Una sentencia despues del async await')
+  }
+
+  getPublissh(userid: any) {
+    this.publicationService.getPublishs(userid).subscribe(
+      response => {
+        if(response && response.profile){
+          console.log(response.profile);
+          this.publicationss = response.profile;
+        }else{
+          console.log('Ha ocurrido un error');
+        }
+      }
+    )
   }
 
   editMyInfo(formEdit: NgForm){
@@ -110,13 +170,13 @@ export class ProfileComponent implements OnInit {
     )
 
     setTimeout(() => {
-      this.Oficialpublications.forEach((element: any) => {
+      this.publicationss.forEach((element: any) => {
         if (element._id == id) {
           element.comments = '';
           element.comments = comentsPerPublish
         }
       });
-      console.log(this.Oficialpublications)
+      console.log(this.publicationss)
     }, 1000);
 
 
@@ -197,18 +257,7 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  getPublissh(userid: any) {
-    this.publicationService.getPublishs().subscribe(
-      response => {
-        console.log(response.publications[0]);
-        this.publicationss = response.publications[0];
-        this.Oficialpublications = this.publicationss.filter((elemento: any) => {
-            return elemento.user._id == userid;
-        });
-        console.log(this.Oficialpublications);
-      }
-    )
-  }
+
 
   addFollow(userId: any){
     console.log(userId)

@@ -21,7 +21,7 @@ router.get('/usuarios/:page', verify, async (req, res) => {
         page = 1;
     }
     let itemPerPage = 5;
-    await User.find().sort('-createdAt').paginate(page, itemPerPage, (err, users, total) => {
+    await User.find().sort('_id').paginate(page, itemPerPage, (err, users, total) => {
                 if (err) return res.json({ response: 'Ha habido un error llamando a los usuarios' });
                 return res.status(200).json({
                     users,

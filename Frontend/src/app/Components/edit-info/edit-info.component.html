@@ -18,13 +18,13 @@
                 <form #formEdit="ngForm" (ngSubmit)="updateInfo(formEdit)">
                     <div class="form-group mb-3">
                         <input type="email" name="email" #email="ngModel" placeholder="Email" class="form-control mb-2"
-                            [(ngModel)]="usuario.email">
+                            [(ngModel)]="usuario.email" required>
                             <span *ngIf="!email.value && email.touched">El email es obligatorio</span>
 
                     </div>
                     <div class="form-group my-3">
                         <input type="text" name="surname" #surname="ngModel" placeholder="Surname" class="form-control mb-2"
-                            [(ngModel)]="usuario.surname">
+                            [(ngModel)]="usuario.surname" required>
                             <span *ngIf="!surname.value && surname.touched">El surname es obligatorio</span>
 
                     </div>
@@ -40,7 +40,7 @@
                             (change)="imgRegister($event)">
                     </div>
                     <div class="d-grid my-3">
-                        <button class="btn btnColor">Enviar</button>
+                        <button class="btn btnColor" [disabled]="formEdit.form.invalid">Enviar</button>
                     </div>
                 </form>
             </div>
